@@ -1,0 +1,241 @@
+﻿<Page
+    x:Class="uniApp1.Pages.MentionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:uniApp1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    NavigationCacheMode="Enabled"  
+    mc:Ignorable="d">
+
+  <Page.Resources>
+    <MenuFlyout x:Key="CommandMenuFlyout">
+      <MenuFlyout.MenuFlyoutPresenterStyle>
+        <Style TargetType="MenuFlyoutPresenter">
+          <Setter Property="BorderBrush" Value="CornflowerBlue"/>
+          <Setter Property="BorderThickness" Value="5"/>
+        </Style>
+      </MenuFlyout.MenuFlyoutPresenterStyle>
+      <MenuFlyoutItem x:Name="userInfoItem" Text="User Information" Tag="UserInfo" Click="userInfoCommand_Click"  />
+      <MenuFlyoutSeparator/>
+      <!--<MenuFlyoutItem x:Name="webOpenItem" Text="Open the Web" Tag="OpenWeb"   />-->
+      <MenuFlyoutSeparator/>
+      <MenuFlyoutItem x:Name="retweetItem" Text="Retweet" Tag="Retweet" Click="retweetButton_Click"
+                         />
+      <!--DataContext="{Binding}"-->
+      <MenuFlyoutItem x:Name="likeItem" Text="Like" Tag="Like" Click="favoriteButton_Click"
+                        />
+      <MenuFlyoutItem x:Name="detailItem" Text="Detail" Tag="Detail" Click="replyButton_Click"
+                         />
+    </MenuFlyout>
+  </Page.Resources>
+
+  <!--
+  <Page.BottomAppBar>
+  </Page.BottomAppBar>
+-->
+  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <!--
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+-->
+
+    <ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" >
+      <ListView.ItemTemplate>
+
+        <DataTemplate>
+          <local:TweetsList FlyoutBase.AttachedFlyout="{StaticResource CommandMenuFlyout}" Tapped="TweetsList_Tapped"/>
+          <!--
+          <StackPanel Orientation="Horizontal">
+            <Image Source="{Binding ProfileImageUrl}" Width="50" Height="50" Stretch="Uniform"></Image>
+            <StackPanel Orientation="Vertical">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding UserName}" TextWrapping="Wrap" />
+                <TextBlock Text="{Binding ScreenName}" TextWrapping="Wrap"/>
+              </StackPanel>
+              <TextBlock Text="{Binding Text}" MaxWidth="280" TextWrapping="Wrap"/>
+              <TextBlock Text="{Binding Date}"  MaxWidth="300" TextWrapping="Wrap"/>
+              <TextBlock Text="{Binding UserId}"  MaxWidth="300" TextWrapping="Wrap"/>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding RetweetUser}"  MaxWidth="300" TextWrapping="Wrap"/>
+                <Image Source="{Binding RetweetUserProfileImageUrl}" Width="30" Height="30" Stretch="Uniform" Margin="10,0,0,0"></Image>
+              </StackPanel>
+            </StackPanel>
+          </StackPanel>
+          -->
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+
+    <Popup x:Name="popFlyout" IsOpen="False" IsLightDismissEnabled="True">
+      <TextBlock x:Name="popBlock" />
+    </Popup>
+    <CommandBar ClosedDisplayMode="Compact"  VerticalAlignment="Bottom" >
+      <CommandBar.SecondaryCommands>
+        <!--
+        <AppBarButton x:Name="retweetCommand" Icon="Redo" Label="Retweet" Click="retweetButton_Click" >
+          <AppBarButton.Flyout>
+            <Flyout x:Name="retweetFlyout2" Placement="Top" >
+              <TextBlock x:Name="retweetBloc2k" />
+            </Flyout>
+          </AppBarButton.Flyout>
+        </AppBarButton>-->
+        <AppBarButton x:Name="userInfoCommand" Icon="Directions" Label="UserInfo" Click="userInfoCommand_Click" />
+      </CommandBar.SecondaryCommands>
+
+      <AppBarButton x:Name="retweetButton"  Label="Retweet" Click="retweetButton_Click" >
+        <AppBarButton.Icon>
+          <FontIcon Glyph="&#xE8EB;" FontSize="20" />
+        </AppBarButton.Icon>
+
+        <AppBarButton.Flyout>
+          <Flyout x:Name="retweetFlyout" Placement="Top" >
+            <TextBlock x:Name="retweetBlock" />
+          </Flyout>
+        </AppBarButton.Flyout>
+      </AppBarButton>
+
+      <AppBarButton x:Name="favoriteButton"  Label="Favorite" Click="favoriteButton_Click" >
+
+        <AppBarButton.Icon>
+          <FontIcon Glyph="&#xE224;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+        </AppBarButton.Icon>
+
+        <AppBarButton.Flyout>
+          <Flyout x:Name="favoriteFlyout" Placement="Top" >
+            <TextBlock x:Name="favoriteBlock" />
+          </Flyout>
+        </AppBarButton.Flyout>
+      </AppBarButton>
+
+      <AppBarButton x:Name="reloadButton"  Label="Reload" Click="reloadButton_Click" >
+        <AppBarButton.Icon>
+          <FontIcon Glyph="&#xE72C;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+        </AppBarButton.Icon>
+      </AppBarButton>
+
+      <AppBarButton x:Name="replyButton" Label="Detail" Click="replyButton_Click"   >
+        <AppBarButton.Icon>
+          <FontIcon Glyph="&#xE8A1;" FontSize="20" />
+        </AppBarButton.Icon>
+      </AppBarButton>
+
+      <!-- <AppBarButton x:Name="tweetButton" Icon="Send" Label="Tweet" Click="tweetButton_Click"    >
+          
+        <AppBarButton.Flyout>
+          <Flyout x:Name="tweetFlyout" Placement="Top" >
+            <StackPanel x:Name="tweetStackPanel" >
+              
+              <TextBlock x:Name="userBlock" />
+              <TextBox x:Name="tweetInputBox" Height="100" AcceptsReturn="True" TextWrapping="Wrap" MaxLength="200" Width="200" />
+              <StackPanel Orientation="Horizontal">
+                <Button x:Name="tweetButtom" Content="Tweet"  Foreground="Black" Click="tweetSendButton_Click" />
+                <Button x:Name="photoButtom" Content="Photo"  Foreground="Black" Click="photoButtom_Click"  />
+              </StackPanel>
+
+              <ScrollViewer MaxHeight="200" >
+                <ListView >
+                  <Image x:Name="sendImage1" Width="200"  />
+                  <Image x:Name="sendImage2" Width="200" />
+                  <Image x:Name="sendImage3" Width="200" />
+                  <Image x:Name="sendImage4" Width="200" />
+                </ListView>
+              </ScrollViewer>
+              <TextBlock x:Name="tweetState" />
+            </StackPanel>
+
+          </Flyout>
+        </AppBarButton.Flyout>
+          
+          
+        </AppBarButton>-->
+
+    </CommandBar>
+
+<!---->
+    <VisualStateManager.VisualStateGroups>
+      <VisualStateGroup x:Name="WindowStates">
+        <VisualState x:Name="WideState">
+          <VisualState.StateTriggers>
+            <AdaptiveTrigger MinWindowWidth="400" />
+          </VisualState.StateTriggers>
+          <VisualState.Setters>
+          </VisualState.Setters>
+        </VisualState>
+        <VisualState x:Name="NarrowState">
+          <VisualState.StateTriggers>
+            <AdaptiveTrigger MinWindowWidth="0" />
+          </VisualState.StateTriggers>
+          <VisualState.Setters>
+          </VisualState.Setters>
+        </VisualState>
+      </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+
+
+  </Grid>
+</Page>
+
+<!--
+        <AppBarButton.Flyout>
+          <Flyout x:Name="Flyout1" Placement="Top" >
+            
+            <StackPanel x:Name="replyStackPanel" >
+              <ListView x:Name="replyView"  Margin="0,0,0,0" VerticalAlignment="Stretch" ItemsSource="{Binding}" Foreground="White" MaxHeight="200"  SelectionMode="Single">
+                <ListView.ItemTemplate>
+                  <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                      <Image Source="{Binding ProfileImageUrl}" Width="50" Height="50" Stretch="Uniform"></Image>
+                      <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                          <TextBlock Text="{Binding UserName}" TextWrapping="Wrap" />
+                          <TextBlock Text="{Binding ScreenName}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <TextBlock Text="{Binding Text}"  MaxWidth="300" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding Date}"  MaxWidth="300" TextWrapping="Wrap"/>
+                        <StackPanel Orientation="Horizontal">
+                          <TextBlock Text="{Binding RetweetCount}" MaxWidth="300" TextWrapping="Wrap"/>
+                          <TextBlock Text="{Binding FavoriteCount}"  MaxWidth="300" TextWrapping="Wrap"/>
+                        </StackPanel>
+                      </StackPanel>
+                    </StackPanel>
+                  </DataTemplate>
+                </ListView.ItemTemplate>
+              </ListView>
+
+              <ScrollViewer MaxHeight="200" Background="Transparent" HorizontalScrollBarVisibility="Auto">
+                <ListView >
+                  <Image x:Name="tweetImage1"  />
+                  <Image x:Name="tweetImage2" />
+                  <Image x:Name="tweetImage3" />
+                  <Image x:Name="tweetImage4" />
+                </ListView>
+              </ScrollViewer>
+
+              <ScrollViewer MaxHeight="200" >
+                <ListBox x:Name="urlView" ItemsSource="{Binding}">
+                  <ListBox.ItemTemplate>
+                    <DataTemplate>
+                      <TextBlock  Name="urlToContent" MinWidth="100" Width="Auto">
+                      </TextBlock>
+
+                    </DataTemplate>
+                  </ListBox.ItemTemplate>
+                </ListBox>
+              </ScrollViewer>
+
+              <TextBlock x:Name="translateBox" TextWrapping="Wrap"/>
+
+              <TextBlock x:Name="replyBlock" />
+              <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="replyBox" Width="230" TextWrapping="Wrap" AcceptsReturn="True" MaxLength="140" />
+                <Button x:Name="replyTweetButtom" Click="replyTweetButtom_Click"/>
+              </StackPanel>
+              <TextBlock x:Name="reptweetState" />
+            </StackPanel>
+          </Flyout>
+
+        </AppBarButton.Flyout>
+        -->

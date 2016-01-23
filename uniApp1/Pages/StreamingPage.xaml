@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="uniApp1.Pages.StreamingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:uniApp1.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel Orientation="Horizontal">
+
+      <TextBlock x:Name="testBlock" />
+      <!--<Frame x:Name="frame1" />-->
+      <Frame x:Name="frame2"  />
+
+    </StackPanel>
+      
+    </Grid>
+
+  <VisualStateManager.VisualStateGroups>
+    <VisualStateGroup x:Name="WindowStates">
+      <VisualState x:Name="WideState">
+        <VisualState.StateTriggers>
+          <AdaptiveTrigger MinWindowWidth="720" />
+        </VisualState.StateTriggers>
+        <VisualState.Setters>
+          <Setter Target="frame2.Visibility" Value="Visible"/>
+          <!--Target="SplitView.DisplayMode" Value="CompactInline"-->
+        </VisualState.Setters>
+      </VisualState>
+      <VisualState x:Name="NarrowState">
+        <VisualState.StateTriggers>
+          <AdaptiveTrigger MinWindowWidth="0" />
+        </VisualState.StateTriggers>
+        <VisualState.Setters>
+          <Setter Target="frame2.Visibility" Value="Collapsed"/>
+        </VisualState.Setters>
+      </VisualState>
+    </VisualStateGroup>
+  </VisualStateManager.VisualStateGroups>
+</Page>
