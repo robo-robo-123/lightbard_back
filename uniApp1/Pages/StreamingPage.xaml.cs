@@ -83,7 +83,7 @@ namespace uniApp1.Pages
 
       stream.OfType<StatusMessage>().Subscribe(x => test(x.Status.User.ScreenName + ":" + x.Status.Text + "\n"));
       stream.OfType<StatusMessage>().Subscribe(x => test2(x));
-      stream.OfType<EventMessage>().Subscribe(x => test3(x));
+      //stream.OfType<EventMessage>().Subscribe(x => test3(x));
 
       var disposable = stream.Connect();
       //testBlock.Text = "接続中です";
@@ -95,10 +95,12 @@ namespace uniApp1.Pages
 
     }
 
+    /*
     private void test3(EventMessage x)
     {
       
     }
+    */
 
     private void test2(StatusMessage x)
     {
