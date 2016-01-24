@@ -7,6 +7,7 @@ using CoreTweet;
 using System.Text.RegularExpressions;
 using System.Collections.Specialized;
 using Windows.Storage;
+using System.Collections.ObjectModel;
 
 
 namespace uniApp1.Class
@@ -15,8 +16,8 @@ namespace uniApp1.Class
   {
     
     internal Tokens tokens;
-    List<TweetClass.TweetInfo> tweet;
-    List<TweetClass.TweetInfo> reply;
+    ObservableCollection<TweetClass.TweetInfo> tweet;
+    ObservableCollection<TweetClass.TweetInfo> reply;
     List<TweetClass.UserInfo> userPro;
 
     public Tweets()
@@ -59,11 +60,11 @@ namespace uniApp1.Class
     }
 
 
-    public async Task<List<TweetClass.TweetInfo>> tweetload()
+    public async Task<ObservableCollection<TweetClass.TweetInfo>> tweetload()
     {
       //  tokens = getToken();
 
-      tweet = new List<TweetClass.TweetInfo>();
+      tweet = new ObservableCollection<TweetClass.TweetInfo>();
 
       //      string[] names = nameList.Cast<string>().ToArray();
       /*      foreach(var str in names)
@@ -148,7 +149,7 @@ namespace uniApp1.Class
 
 
 
-    public void Addtweet(List<TweetClass.TweetInfo> tweet, Status status)
+    public void Addtweet(ObservableCollection<TweetClass.TweetInfo> tweet, Status status)
     {
       //status.Entities.
       string con = status.Text;
@@ -271,10 +272,10 @@ namespace uniApp1.Class
 );
     }
 
-    public List<TweetClass.TweetInfo> replytweetinfo(TweetClass.TweetInfo item)
+    public ObservableCollection<TweetClass.TweetInfo> replytweetinfo(TweetClass.TweetInfo item)
     {
       //情報を引き出し、ここで画像を取得しよう。
-      reply = new List<TweetClass.TweetInfo>();
+      reply = new ObservableCollection<TweetClass.TweetInfo>();
 
       reply.Add(new TweetClass.TweetInfo
       {
@@ -296,10 +297,10 @@ namespace uniApp1.Class
 
     }
 
-    public List<TweetClass.TweetInfo> replytweetinfo2(Status item)
+    public ObservableCollection<TweetClass.TweetInfo> replytweetinfo2(Status item)
     {
       //情報を引き出し、ここで画像を取得しよう。
-      reply = new List<TweetClass.TweetInfo>();
+      reply = new ObservableCollection<TweetClass.TweetInfo>();
       try
       {
         reply.Add(new TweetClass.TweetInfo

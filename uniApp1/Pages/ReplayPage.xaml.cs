@@ -16,6 +16,7 @@ using uniApp1.Class;
 using CoreTweet;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Core;
+using System.Collections.ObjectModel;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=234238 を参照してください
 
@@ -33,7 +34,7 @@ namespace uniApp1.Pages
     public long? ReplyId { get; set; }
     public Status status { get; set; }
     public Status status2 { get; set; }
-    List<TweetClass.TweetInfo> convetweet;
+    ObservableCollection<TweetClass.TweetInfo> convetweet;
 
     public ReplayPage()
     {
@@ -163,7 +164,7 @@ namespace uniApp1.Pages
     private async void loadTweet(long? Id)
     {
       status = await tokens.Statuses.ShowAsync(id => Id);
-      var tweet = new List<TweetClass.TweetInfo>();
+      var tweet = new ObservableCollection<TweetClass.TweetInfo>();
       tweet = data.replytweetinfo2(status);
       replyView.ItemsSource = tweet;
       show(status);

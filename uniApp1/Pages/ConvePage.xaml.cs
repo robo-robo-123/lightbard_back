@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using CoreTweet;
 using uniApp1.Class;
 using Windows.UI.Core;
+using System.Collections.ObjectModel;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=234238 を参照してください
 
@@ -26,7 +27,7 @@ namespace uniApp1.Pages
   public sealed partial class ConvePage : Page
   {
     internal Tokens tokens;
-    List<TweetClass.TweetInfo> tweet;
+    ObservableCollection<TweetClass.TweetInfo> tweet;
     Tweets data = new Tweets();
     TweetClass.TweetInfo item;
     public Status status { get; set; }
@@ -52,7 +53,7 @@ namespace uniApp1.Pages
       //replyBox.Text = item.ToString();
       //show();
       //loadTweet(item.Id);
-      tweet = new List<TweetClass.TweetInfo>();
+      tweet = new ObservableCollection<TweetClass.TweetInfo>();
       conv(id);
 
     }
@@ -105,7 +106,7 @@ namespace uniApp1.Pages
     private async void loadTweet(long? Id)
     {
       status = await tokens.Statuses.ShowAsync(id => Id);
-      var tweet = new List<TweetClass.TweetInfo>();
+      var tweet = new ObservableCollection<TweetClass.TweetInfo>();
       data.Addtweet(tweet, status);
       //tweet = data.replytweetinfo2(status);
       conveView.ItemsSource = tweet;

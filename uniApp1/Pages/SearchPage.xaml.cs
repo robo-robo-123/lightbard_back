@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using CoreTweet;
 using uniApp1.Class;
 using Windows.Storage;
+using System.Collections.ObjectModel;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=234238 を参照してください
 
@@ -28,7 +29,7 @@ namespace uniApp1.Pages
 
     internal Tokens tokens;
 
-    List<TweetClass.TweetInfo> tweet;
+    ObservableCollection<TweetClass.TweetInfo> tweet;
     List<TweetClass.TweetInfo> userTweet;
 
     List<TweetClass.UserInfo> user;
@@ -49,7 +50,7 @@ namespace uniApp1.Pages
     {
       if (tokens != null)
       {
-        tweet = new List<TweetClass.TweetInfo>();
+        tweet = new ObservableCollection<TweetClass.TweetInfo>();
         try
         {
           string search_word = serchBox.Text;

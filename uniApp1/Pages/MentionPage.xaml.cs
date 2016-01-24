@@ -17,6 +17,7 @@ using uniApp1.Class;
 using CoreTweet;
 using Windows.UI.Popups;
 using Windows.Storage.Pickers;
+using System.Collections.ObjectModel;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=234238 を参照してください
 
@@ -30,7 +31,7 @@ namespace uniApp1.Pages
 
     internal Tokens tokens;
 
-    List<TweetClass.TweetInfo> tweet;
+    ObservableCollection<TweetClass.TweetInfo> tweet;
     List<TweetClass.TweetInfo> userTweet;
 
     List<TweetClass.UserInfo> user;
@@ -84,10 +85,10 @@ namespace uniApp1.Pages
     {
       if (tokens != null)
       {
-        tweet = new List<TweetClass.TweetInfo>();
+        tweet = new ObservableCollection<TweetClass.TweetInfo>();
         try
         {
-          tweet = new List<TweetClass.TweetInfo>();
+          tweet = new ObservableCollection<TweetClass.TweetInfo>();
 
 
           foreach (var status in await tokens.Statuses.MentionsTimelineAsync(count => 800))

@@ -16,6 +16,7 @@ using uniApp1.Class;
 using CoreTweet;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Core;
+using System.Collections.ObjectModel;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=234238 を参照してください
 
@@ -34,7 +35,7 @@ namespace uniApp1.Pages
 
     UserResponse showedUser;
 
-    List<TweetClass.TweetInfo> tweet;
+    ObservableCollection<TweetClass.TweetInfo> tweet;
     List<TweetClass.TweetInfo> userTweet;
 
     List<TweetClass.UserInfo> user;
@@ -142,10 +143,10 @@ namespace uniApp1.Pages
       listView2.Visibility = Visibility.Visible;
       if (tokens != null)
       {
-        tweet = new List<TweetClass.TweetInfo>();
+        tweet = new ObservableCollection<TweetClass.TweetInfo>();
         try
         {
-          tweet = new List<TweetClass.TweetInfo>();
+         // tweet = new List<TweetClass.TweetInfo>();
 
 
           foreach (var status in await tokens.Statuses.UserTimelineAsync(user_id => UserId, count => 800))
@@ -269,10 +270,10 @@ namespace uniApp1.Pages
       listView2.Visibility = Visibility.Visible;
       if (tokens != null)
       {
-        tweet = new List<TweetClass.TweetInfo>();
+        tweet = new ObservableCollection<TweetClass.TweetInfo>();
         try
         {
-          tweet = new List<TweetClass.TweetInfo>();
+        //  tweet = new List<TweetClass.TweetInfo>();
 
 
           foreach (var status in await tokens.Favorites.ListAsync(user_id => UserId, count => 800))
