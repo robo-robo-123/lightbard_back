@@ -27,7 +27,7 @@ namespace uniApp1.Pages
       this.InitializeComponent();
       
       this.timelineFrame.Navigate(typeof(Pages.Home));
-      this.tweetFrame.Navigate(typeof(Pages.TweetPage));
+      //this.tweetFrame.Navigate(typeof(Pages.TweetPage));
       this.mentionFrame.Navigate(typeof(Pages.MentionPage));
       
     }

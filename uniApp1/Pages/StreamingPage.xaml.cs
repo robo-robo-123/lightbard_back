@@ -23,6 +23,7 @@ using CoreTweet;
 using CoreTweet.Streaming;
 using Windows.UI.Notifications;
 using Windows.Storage;
+using System.Collections.ObjectModel;
 //using CoreTweet.Rest;
 //using CoreTweet.Streaming.Reactive;
 
@@ -38,15 +39,18 @@ namespace uniApp1.Pages
 
     internal Tokens tokens;
     Tweets data = new Tweets();
+    List<TweetClass.TweetInfo> tweet;
+    ObservableCollection<TweetClass.TweetInfo> tweet2;
 
     public StreamingPage()
     {
       this.InitializeComponent();
       tokens = data.getToken();
+      tweet2 = new ObservableCollection<TweetClass.TweetInfo>();
 
 
       //this.frame1.Navigate(typeof(Pages.Home));
-      this.frame2.Navigate(typeof(Pages.MentionPage));
+      this.frame2.Navigate(typeof(Pages.MainFrame));
 
 
 
@@ -83,6 +87,7 @@ namespace uniApp1.Pages
 
       stream.OfType<StatusMessage>().Subscribe(x => test(x.Status.User.ScreenName + ":" + x.Status.Text + "\n"));
       stream.OfType<StatusMessage>().Subscribe(x => test2(x));
+      stream.OfType<StatusMessage>().Subscribe(x => streamtest(x));
       //stream.OfType<EventMessage>().Subscribe(x => test3(x));
 
       var disposable = stream.Connect();
@@ -95,12 +100,81 @@ namespace uniApp1.Pages
 
     }
 
-    /*
-    private void test3(EventMessage x)
+
+
+    private async void streamtest(StatusMessage x)
     {
-      
+      Status status = x.Status;
+      await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+      {
+        if (status.RetweetedStatus != null)
+      {
+        tweet2.Add(new TweetClass.TweetInfo
+        {
+          UserName = status.RetweetedStatus.User.Name + " ",
+          UserId = status.RetweetedStatus.User.Id,
+          ScreenName = "@" + status.RetweetedStatus.User.ScreenName,
+          ProfileImageUrl = status.RetweetedStatus.User.ProfileImageUrlHttps,
+          Text = System.Net.WebUtility.HtmlDecode(status.RetweetedStatus.Text),
+          Date = status.RetweetedStatus.CreatedAt.LocalDateTime.ToString(),
+          //Date = status.RetweetedStatus.CreatedAt.ToString(),
+          Id = status.RetweetedStatus.Id,
+          //retUser = status.RetweetedStatus,
+          Via = status.RetweetedStatus.Source,
+          FavoriteCount = ", Like: " + status.FavoriteCount.ToString(),
+          RetweetCount = "Retweet: " + status.RetweetCount.ToString(),
+
+          //Url = m.Value.ToString(),
+          RetweetUser = "Retweeted by @" + status.User.ScreenName,
+          RetweetUserProfileImageUrl = status.User.ProfileImageUrlHttps,
+
+          urls = status.RetweetedStatus.Entities.Urls,
+          //ReplyId = status.RetweetedStatus.InReplyToStatusId
+
+        }
+          );
+      }
+      else
+      {
+        tweet2.Add(new TweetClass.TweetInfo
+        {
+          UserName = status.User.Name + " ",
+          UserId = status.User.Id,
+          ScreenName = "@" + status.User.ScreenName,
+          ProfileImageUrl = status.User.ProfileImageUrlHttps,
+          Text = System.Net.WebUtility.HtmlDecode(status.Text),
+          Date = status.CreatedAt.LocalDateTime.ToString(),
+          //Date = status.RetweetedStatus.CreatedAt.ToString(),
+          Id = status.Id,
+          //retUser = status.RetweetedStatus,
+          //Url = m.Value.ToString(),
+          FavoriteCount = ", Like: " + status.FavoriteCount.ToString(),
+          RetweetCount = "Retweet: " + status.RetweetCount.ToString(),
+          Via = status.Source,
+          RetweetUser = null,
+          urls = status.Entities.Urls,
+
+        }
+        );
+      }
+
+
+
+        this.listView.ItemsSource = tweet2;
+      });
+
+
+
     }
-    */
+
+
+    private void test3(EventMessage x)
+    { 
+
+      
+
+    }
+    
 
     private void test2(StatusMessage x)
     {
@@ -136,7 +210,7 @@ namespace uniApp1.Pages
       await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
       {
 
-        testBlock.Text += x;
+        //testBlock.Text += x;
         //testBlock.Text = x.Status.User.ScreenName, x.Status.Text;
       });
     }
