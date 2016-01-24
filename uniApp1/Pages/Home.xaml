@@ -120,6 +120,12 @@
       </AppBarButton>
 -->
 
+      <AppBarButton x:Name="likeButton"  Label="Like" Click="favoriteButton_Click"  >
+        <AppBarButton.Icon>
+          <FontIcon Glyph="&#xE006;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+        </AppBarButton.Icon>
+      </AppBarButton>
+
 
       <AppBarButton x:Name="replyButton" Label="Detail" Click="replyButton_Click" ToolTipService.ToolTip="Tweetの詳細を確認します"   >
         <AppBarButton.Icon>
