@@ -49,6 +49,8 @@ namespace uniApp1.Pages
       tweet2 = new ObservableCollection<TweetClass.TweetInfo>();
 
 
+     // listView.
+
       //this.frame1.Navigate(typeof(Pages.Home));
       this.frame2.Navigate(typeof(Pages.MainFrame));
 

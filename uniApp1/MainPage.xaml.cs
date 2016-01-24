@@ -35,7 +35,7 @@ namespace uniApp1
       var reg = new uniApp1.Class.ClientData();
       tokens = data.getToken();
       nameChange();
-      this.testFrame.Navigate(typeof(Pages.MainFrame));
+      this.testFrame.Navigate(typeof(Pages.HomeFrame));
 
       
       SystemNavigationManager.GetForCurrentView().BackRequested += (_, args) =>
@@ -68,12 +68,12 @@ namespace uniApp1
     {
   // 適切な移動先のページに移動し、新しいページを構成します。
   // このとき、必要な情報をナビゲーション・パラメータとして渡します
-  this.testFrame.Navigate(typeof(Pages.Home));
+  this.testFrame.Navigate(typeof(Pages.HomeFrame));
     }
 
     private void Grid_Tapped_1(object sender, TappedRoutedEventArgs e)
     {
-      this.testFrame.Navigate(typeof(Pages.MainFrame));
+      this.testFrame.Navigate(typeof(Pages.HomeFrame));
 
     }
 

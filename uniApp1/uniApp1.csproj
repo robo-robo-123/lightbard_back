@@ -102,11 +102,16 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Class\OptionSetting.cs" />
+    <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Pages\BlockPage.xaml.cs">
       <DependentUpon>BlockPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ConvePage.xaml.cs">
       <DependentUpon>ConvePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\HomeFrame.xaml.cs">
+      <DependentUpon>HomeFrame.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ImageView.xaml.cs">
       <DependentUpon>ImageView.xaml</DependentUpon>
@@ -186,6 +191,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ConvePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\HomeFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
