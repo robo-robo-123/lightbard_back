@@ -11,51 +11,60 @@
   <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Pivot x:Name="rootPivot" >
-      <PivotItem x:Name="timelineItem" x:Uid="Search" Header="Timeline" Margin="12,0,12,50"  >
-        <ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" >
+      <PivotItem x:Name="searchItem" x:Uid="Search" Header="tweet" Margin="12,0,12,50"  >
+
+          <ScrollViewer>
+        <StackPanel>
+          <CommandBar ClosedDisplayMode="Compact" VerticalAlignment="Top">
+            <CommandBar.Content>
+              <TextBox x:Name="serchBox2" Width="150" />
+            </CommandBar.Content>
+              <AppBarButton x:Name="tweetButton"  Label="Tweet Search" Icon="Edit" Click="searchButtom_Click"/>
+            </CommandBar>
+
+            <ListView x:Name="searchView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" >
           <ListView.ItemTemplate >
             <DataTemplate >
               <local:TweetsList  />
             </DataTemplate>
           </ListView.ItemTemplate>
         </ListView>
+
+        </StackPanel>
+        </ScrollViewer>
       </PivotItem>
 
-    <PivotItem x:Name="tweetItem" x:Uid="Trend" Header="New Tweet" Margin="0,0,0,50" >
-
-        <ListView x:Name="searchView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" >
-          <!-- <ListView.ItemTemplate >
-            <DataTemplate >
-              <StackPanel Orientation="Horizontal">
-                <Image x:Name="profileImage" Source="{Binding ProfileImageUrl}" Width="50" Height="50" Stretch="Uniform"></Image>
-                <StackPanel Orientation="Vertical">
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding UserName}" TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding ScreenName}" TextWrapping="Wrap"/>
-                  </StackPanel>
-                  <TextBlock Text="{Binding Text}" MaxWidth="280" TextWrapping="Wrap"/>
-                  <TextBlock Text="{Binding Date}"  MaxWidth="280" TextWrapping="Wrap"/>
-
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding RetweetUser}"  MaxWidth="280" TextWrapping="Wrap"/>
-                    <Image Source="{Binding RetweetUserProfileImageUrl}" Width="30" Height="30" Stretch="Uniform" Margin="10,0,0,0"></Image>
-                  </StackPanel>
-                </StackPanel>
-              </StackPanel>
-              <local:TweetsList  />
-            </DataTemplate>
-          </ListView.ItemTemplate>-->
+      <PivotItem x:Name="trendItem" x:Uid="Trend" Header="trend" Margin="0,0,0,50" >
+        <ListView x:Name="trendView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" >
         </ListView>
-     
-      
-    </PivotItem>
+      </PivotItem>
+
+      <PivotItem x:Name="userItem"  Header="user" Margin="12,0,12,50"  >
+        <ScrollViewer>
+        <StackPanel>
+          <CommandBar ClosedDisplayMode="Compact" VerticalAlignment="Bottom">
+            <CommandBar.Content>
+              <TextBox x:Name="serchBox" Width="100" />
+            </CommandBar.Content>
+            <AppBarButton x:Name="userButton"  Label="User Search" Icon="People" Click="userButton_Click"/>
+          </CommandBar>
+          <ListView x:Name="userSearchView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" >
+          <ListView.ItemTemplate >
+            <DataTemplate >
+              <local:UserLists  />
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+        </StackPanel>
+        </ScrollViewer>
+      </PivotItem>
 
 
-  </Pivot>
+    </Pivot>
     
 
 
-
+<!--
     <CommandBar ClosedDisplayMode="Compact" VerticalAlignment="Bottom">
       <CommandBar.SecondaryCommands>
         <AppBarButton Label="Secondary1" Icon="Edit"/>
@@ -63,18 +72,11 @@
         <AppBarToggleButton Label="Secondary3" Icon="Edit"/>
       </CommandBar.SecondaryCommands>
       <CommandBar.Content>
-        <!--ここには、AppBarButtonなど以外の任意のコントロールを配置できる-->
-        <!--<StackPanel Orientation="Horizontal">
-           </StackPanel>       
-          -->
           <TextBox x:Name="serchBox" Width="100" />
-
       </CommandBar.Content>
-
-      <!--ここに定義したものはPrimaryCommandsプロパティになる-->
       <AppBarButton x:Name="tweetButton"  Label="Tweet Search" Icon="Edit" Click="searchButtom_Click"/>
       <AppBarButton x:Name="userButton"  Label="User Search" Icon="People" Click="userButton_Click"/>
     </CommandBar>
-
+-->
   </Grid>
 </Page>

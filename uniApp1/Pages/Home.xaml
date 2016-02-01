@@ -22,7 +22,7 @@
       <MenuFlyoutSeparator/>
       <!--<MenuFlyoutItem x:Name="webOpenItem" Text="Open the Web" Tag="OpenWeb"   />-->
       <MenuFlyoutItem x:Name="conveItem" Text="Conversation" Tag="Conversation" Click="conveItem_Click"  />
-      
+
       <MenuFlyoutSeparator/>
       <MenuFlyoutItem x:Name="retweetItem" Text="Retweet" Tag="Retweet" Click="retweetButton_Click"
                          />
@@ -34,7 +34,7 @@
     </MenuFlyout>
   </Page.Resources>
 
-<!--  <Page.BottomAppBar>
+  <!--  <Page.BottomAppBar>
 
 
   </Page.BottomAppBar>
@@ -49,30 +49,10 @@
 -->
 
 
-    <ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" Margin="0,0,0,50" 
->
+    <ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" Margin="0,0,0,50"  >
       <ListView.ItemTemplate >
-
         <DataTemplate >
-          <local:TweetsList  BorderBrush="Aqua" FlyoutBase.AttachedFlyout="{StaticResource CommandMenuFlyout}" Tapped="TweetsList_Tapped" />
-          <!--
-          <StackPanel Orientation="Horizontal">
-            <Image Source="{Binding ProfileImageUrl}" Width="50" Height="50" Stretch="Uniform"></Image>
-            <StackPanel Orientation="Vertical">
-              <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding UserName}" TextWrapping="Wrap" />
-                <TextBlock Text="{Binding ScreenName}" TextWrapping="Wrap"/>
-              </StackPanel>
-              <TextBlock Text="{Binding Text}" MaxWidth="280" TextWrapping="Wrap"/>
-              <TextBlock Text="{Binding Date}"  MaxWidth="300" TextWrapping="Wrap"/>
-              <TextBlock Text="{Binding UserId}"  MaxWidth="300" TextWrapping="Wrap"/>
-              <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding RetweetUser}"  MaxWidth="300" TextWrapping="Wrap"/>
-                <Image Source="{Binding RetweetUserProfileImageUrl}" Width="30" Height="30" Stretch="Uniform" Margin="10,0,0,0"></Image>
-              </StackPanel>
-            </StackPanel>
-          </StackPanel>
-          -->
+          <local:TweetsList  BorderBrush="Aqua" FlyoutBase.AttachedFlyout="{StaticResource CommandMenuFlyout}" Tapped="TweetsList_Tapped" RightTapped="TweetsList_RightTapped"  />
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>
@@ -83,14 +63,6 @@
 
     <CommandBar ClosedDisplayMode="Compact" VerticalAlignment="Bottom">
       <CommandBar.SecondaryCommands>
-        <!--ClosedDisplayMode="Compact" VerticalAlignment="Bottom" 
-        <AppBarButton x:Name="retweetCommand" Icon="Redo" Label="Retweet" Click="retweetButton_Click" >
-          <AppBarButton.Flyout>
-            <Flyout x:Name="retweetFlyout2" Placement="Top" >
-              <TextBlock x:Name="retweetBloc2k" />
-            </Flyout>
-          </AppBarButton.Flyout>
-        </AppBarButton>-->
         <AppBarButton x:Name="userInfoCommand" Icon="Directions" Label="UserInfo" Click="userInfoCommand_Click" />
       </CommandBar.SecondaryCommands>
       <!--
@@ -118,14 +90,14 @@
           </Flyout>
         </AppBarButton.Flyout>
       </AppBarButton>
--->
+
 
       <AppBarButton x:Name="likeButton"  Label="Like" Click="favoriteButton_Click"  >
         <AppBarButton.Icon>
           <FontIcon Glyph="&#xE006;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
         </AppBarButton.Icon>
       </AppBarButton>
-
+-->
 
       <AppBarButton x:Name="replyButton" Label="Detail" Click="replyButton_Click" ToolTipService.ToolTip="Tweetの詳細を確認します"   >
         <AppBarButton.Icon>
@@ -144,36 +116,6 @@
           <FontIcon Glyph="&#xE70F;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
         </AppBarButton.Icon>
       </AppBarButton>
-
-      <!-- <AppBarButton x:Name="tweetButton" Icon="Send" Label="Tweet" Click="tweetButton_Click"    >
-          
-        <AppBarButton.Flyout>
-          <Flyout x:Name="tweetFlyout" Placement="Top" >
-            <StackPanel x:Name="tweetStackPanel" >
-              
-              <TextBlock x:Name="userBlock" />
-              <TextBox x:Name="tweetInputBox" Height="100" AcceptsReturn="True" TextWrapping="Wrap" MaxLength="200" Width="200" />
-              <StackPanel Orientation="Horizontal">
-                <Button x:Name="tweetButtom" Content="Tweet"  Foreground="Black" Click="tweetSendButton_Click" />
-                <Button x:Name="photoButtom" Content="Photo"  Foreground="Black" Click="photoButtom_Click"  />
-              </StackPanel>
-
-              <ScrollViewer MaxHeight="200" >
-                <ListView >
-                  <Image x:Name="sendImage1" Width="200"  />
-                  <Image x:Name="sendImage2" Width="200" />
-                  <Image x:Name="sendImage3" Width="200" />
-                  <Image x:Name="sendImage4" Width="200" />
-                </ListView>
-              </ScrollViewer>
-              <TextBlock x:Name="tweetState" />
-            </StackPanel>
-
-          </Flyout>
-        </AppBarButton.Flyout>
-          
-          
-        </AppBarButton>-->
 
     </CommandBar>
 
@@ -200,65 +142,3 @@
 
   </Grid>
 </Page>
-
-<!--
-        <AppBarButton.Flyout>
-          <Flyout x:Name="Flyout1" Placement="Top" >
-            
-            <StackPanel x:Name="replyStackPanel" >
-              <ListView x:Name="replyView"  Margin="0,0,0,0" VerticalAlignment="Stretch" ItemsSource="{Binding}" Foreground="White" MaxHeight="200"  SelectionMode="Single">
-                <ListView.ItemTemplate>
-                  <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                      <Image Source="{Binding ProfileImageUrl}" Width="50" Height="50" Stretch="Uniform"></Image>
-                      <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                          <TextBlock Text="{Binding UserName}" TextWrapping="Wrap" />
-                          <TextBlock Text="{Binding ScreenName}" TextWrapping="Wrap"/>
-                        </StackPanel>
-                        <TextBlock Text="{Binding Text}"  MaxWidth="300" TextWrapping="Wrap"/>
-                        <TextBlock Text="{Binding Date}"  MaxWidth="300" TextWrapping="Wrap"/>
-                        <StackPanel Orientation="Horizontal">
-                          <TextBlock Text="{Binding RetweetCount}" MaxWidth="300" TextWrapping="Wrap"/>
-                          <TextBlock Text="{Binding FavoriteCount}"  MaxWidth="300" TextWrapping="Wrap"/>
-                        </StackPanel>
-                      </StackPanel>
-                    </StackPanel>
-                  </DataTemplate>
-                </ListView.ItemTemplate>
-              </ListView>
-
-              <ScrollViewer MaxHeight="200" Background="Transparent" HorizontalScrollBarVisibility="Auto">
-                <ListView >
-                  <Image x:Name="tweetImage1"  />
-                  <Image x:Name="tweetImage2" />
-                  <Image x:Name="tweetImage3" />
-                  <Image x:Name="tweetImage4" />
-                </ListView>
-              </ScrollViewer>
-
-              <ScrollViewer MaxHeight="200" >
-                <ListBox x:Name="urlView" ItemsSource="{Binding}">
-                  <ListBox.ItemTemplate>
-                    <DataTemplate>
-                      <TextBlock  Name="urlToContent" MinWidth="100" Width="Auto">
-                      </TextBlock>
-
-                    </DataTemplate>
-                  </ListBox.ItemTemplate>
-                </ListBox>
-              </ScrollViewer>
-
-              <TextBlock x:Name="translateBox" TextWrapping="Wrap"/>
-
-              <TextBlock x:Name="replyBlock" />
-              <StackPanel Orientation="Horizontal">
-                <TextBox x:Name="replyBox" Width="230" TextWrapping="Wrap" AcceptsReturn="True" MaxLength="140" />
-                <Button x:Name="replyTweetButtom" Click="replyTweetButtom_Click"/>
-              </StackPanel>
-              <TextBlock x:Name="reptweetState" />
-            </StackPanel>
-          </Flyout>
-
-        </AppBarButton.Flyout>
-        -->

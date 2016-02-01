@@ -44,6 +44,7 @@ namespace uniApp1.Pages
     {
       this.InitializeComponent();
       tokens = data.getToken();
+      searchTrend();
     }
 
     private async void searchTweet()
@@ -53,7 +54,7 @@ namespace uniApp1.Pages
         tweet = new ObservableCollection<TweetClass.TweetInfo>();
         try
         {
-          string search_word = serchBox.Text;
+          string search_word = serchBox2.Text;
           var result = await tokens.Search.TweetsAsync(count => 100, q => search_word);
           
           //foreach (var status in await tokens.Search.TweetsAsync(q => serchBox.Text, count => 200, lang => "ja"))
@@ -61,7 +62,7 @@ namespace uniApp1.Pages
           {
             data.Addtweet(tweet, status);
           }
-          listView.ItemsSource = tweet;
+          searchView.ItemsSource = tweet;
         }
         catch (Exception ex)
         {
@@ -96,7 +97,7 @@ namespace uniApp1.Pages
 
             });
           }
-          listView.ItemsSource = user;
+          userSearchView.ItemsSource = user;
         }
         catch (Exception ex)
         {
@@ -121,12 +122,11 @@ namespace uniApp1.Pages
       {
         try
         {
-          string search_word = serchBox.Text;
           var result = await tokens.Trends.AvailableAsync();
 
           //foreach (var status in await tokens.Search.TweetsAsync(q => serchBox.Text, count => 200, lang => "ja"))
 
-          listView.ItemsSource = result;
+          trendView.ItemsSource = result;
         }
         catch (Exception ex)
         {

@@ -1,2 +1,2 @@
-MainPackage=C:\Users\Takeshi\Documents\Visual Studio 2015\Projects\uniApp1\uniApp1\bin\x86\Debug\uniApp1_2.0.15.0_x86_Debug.appx
-SymbolPackage=C:\Users\Takeshi\Documents\Visual Studio 2015\Projects\uniApp1\uniApp1\AppPackages\uniApp1_2.0.15.0_Debug_Test\uniApp1_2.0.15.0_x86_Debug.appxsym
+MainPackage=C:\Users\Takeshi\Documents\Visual Studio 2015\Projects\uniApp1\uniApp1\bin\x86\Debug\uniApp1_2.0.16.0_x86_Debug.appx
+SymbolPackage=C:\Users\Takeshi\Documents\Visual Studio 2015\Projects\uniApp1\uniApp1\AppPackages\uniApp1_2.0.16.0_Debug_Test\uniApp1_2.0.16.0_x86_Debug.appxsym

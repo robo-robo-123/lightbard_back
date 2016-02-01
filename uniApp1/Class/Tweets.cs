@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Specialized;
 using Windows.Storage;
 using System.Collections.ObjectModel;
+using Windows.UI.Notifications;
 
 
 namespace uniApp1.Class
@@ -22,19 +23,18 @@ namespace uniApp1.Class
 
     public Tweets()
     {
-      var settings = ApplicationData.Current.RoamingSettings;
-
-      settings.Values["ApiKey"] = "rXBbSNc4nf01jY2tYYhcQlLdQ";
-      settings.Values["ApiSecret"] = "nSaEdTdvVuAHbv8torT1RzvdHRLdF0b6XiUCO5n5Ciq43gv3vs";
-
+      SaveKey();
     }
 
-//    StringCollection nameList = (StringCollection)Properties.Settings.Default.mutewords;
+    private void SaveKey()
+    {
+      var settings = ApplicationData.Current.RoamingSettings;
+      settings.Values["ApiKey"] = "rXBbSNc4nf01jY2tYYhcQlLdQ";
+      settings.Values["ApiSecret"] = "nSaEdTdvVuAHbv8torT1RzvdHRLdF0b6XiUCO5n5Ciq43gv3vs";
+    }
+
     public CoreTweet.Tokens getToken()
     {
-
-
-
       var value = ApplicationData.Current.RoamingSettings;
 
       if (!string.IsNullOrEmpty((string)value.Values["AccessToken"])
@@ -54,135 +54,39 @@ namespace uniApp1.Class
             , (string)value.Values["AccessTokenSecret"]
             );
       }
-
       return tokens;
-
     }
 
-
+    //Tweet投稿関連
     public async Task<ObservableCollection<TweetClass.TweetInfo>> tweetload()
     {
-      //  tokens = getToken();
-
       tweet = new ObservableCollection<TweetClass.TweetInfo>();
-
-      //      string[] names = nameList.Cast<string>().ToArray();
-      /*      foreach(var str in names)
-            {
-              if (0 <= con.IndexOf(str))
-              {
-                return;
-              }
-            }
-      */
-
       foreach (var status in await tokens.Statuses.HomeTimelineAsync(count => 800))
-
       {
         Addtweet(tweet, status);
-        /*
-      if (status.RetweetedStatus != null)
-      {
-        Regex http = new Regex(@"http://(?<domain>[\w\.]*)/(?<path>[\w\./]*)");
-        Match m = http.Match(status.Text);
-
-
-
-        tweet.Add(new TweetClass.TweetInfo
-        {
-
-
-          UserName = status.RetweetedStatus.User.Name + " ",
-          UserId = status.RetweetedStatus.User.Id,
-          ScreenName = "@" + status.RetweetedStatus.User.ScreenName,
-          ProfileImageUrl = status.RetweetedStatus.User.ProfileImageUrlHttps.OriginalString,
-          Text = status.RetweetedStatus.Text,
-          //Date = status.RetweetedStatus.CreatedAt.ToString(),
-          Id = status.RetweetedStatus.Id,
-          //retUser = status.RetweetedStatus,
-          Url = m.Value.ToString(),
-          Via = status.RetweetedStatus.Source,
-          RetweetUser = "Retweeted by @" + status.User.Name
-
-        }
-          );
-
-
       }
-      else
-      {
-        Regex http = new Regex(@"http://(?<domain>[\w\.]*)/(?<path>[\w\./]*)");
-        Match m = http.Match(status.Text);
-
-
-
-        //  viewTextBox.AppendText(string.Format("{0}: {1}{2}"
-        tweet.Add(new TweetClass.TweetInfo
-        {
-
-          UserName = status.User.Name + " ",
-          UserId = status.User.Id,
-          ScreenName = "@" + status.User.ScreenName,
-          ProfileImageUrl = status.User.ProfileImageUrlHttps.OriginalString,
-          Text = status.Text,
-          //Date = status.RetweetedStatus.CreatedAt.ToString(),
-          Id = status.Id,
-          //retUser = status.RetweetedStatus,
-          Url = m.Value.ToString(),
-          Via = status.Source
-
-        }
-        );
-
-      }*/
-
-
-
-      }
-
       return tweet;
+    }
 
-
+    public async Task<ObservableCollection<TweetClass.TweetInfo>> mentionload()
+    {
+      tweet = new ObservableCollection<TweetClass.TweetInfo>();
+      foreach (var status in await tokens.Statuses.MentionsTimelineAsync(count => 800))
+      {
+        Addtweet(tweet, status);
+      }
+      return tweet;
     }
 
 
-
-
-
-    public void Addtweet(ObservableCollection<TweetClass.TweetInfo> tweet, Status status)
+  public void Addtweet(ObservableCollection<TweetClass.TweetInfo> tweet, Status status)
     {
-      //status.Entities.
       string con = status.Text;
-      /*
-            if (0 < con.IndexOf(""))
-            {
-              return;
-            }
-      */
-
-
-      //     string[] names = nameList.Cast<string>().ToArray();
-      /*foreach(var str in nameList)
-      {
-        if (0 < con.IndexOf(str))
-        {
-          tweet.Add(new TweetClass.TweetInfo
-          {UserName = str });
-
-          return;
-        }
-      }*/
-
-
-
       if (status.RetweetedStatus != null)
       {
-        Regex http = new Regex(@"http://(?<domain>[\w\.]*)/(?<path>[\w\./]*)");
-        Match m = http.Match(status.Text);
 
         tweet.Add(new TweetClass.TweetInfo
         {
-
           UserName = status.RetweetedStatus.User.Name + " ",
           UserId = status.RetweetedStatus.User.Id,
           ScreenName = "@" + status.RetweetedStatus.User.ScreenName,
@@ -207,26 +111,14 @@ namespace uniApp1.Class
           //arrayB.CopyTo(arrayA, 0)
           //media = status.RetweetedStatus.Entities.Media.CopyTo(media, 0)
 
-
-
         }
           );
-
-
-
-
       }
       else
       {
-        Regex http = new Regex(@"http://(?<domain>[\w\.]*)/(?<path>[\w\./]*)");
-        Match m = http.Match(status.Text);
 
-
-
-        //  viewTextBox.AppendText(string.Format("{0}: {1}{2}"
         tweet.Add(new TweetClass.TweetInfo
         {
-
           UserName = status.User.Name + " ",
           UserId = status.User.Id,
           ScreenName = "@" + status.User.ScreenName,
@@ -243,17 +135,68 @@ namespace uniApp1.Class
           RetweetUser = null,
           urls = status.Entities.Urls,
           //ReplyId = status.InReplyToStatusId
-          
-          //media_number = status.Entities.Media.Length,
-          //media = status.ExtendedEntities.Media
 
         }
         );
+      }
+    }
 
+    //通知関連
+    private void toast(string text1)
+    {
+      // テンプレートのタイプを取得
+      var template = ToastTemplateType.ToastText01;
+      // テンプレートを取得（XMLDocument"
+      var toastXml = ToastNotificationManager.GetTemplateContent(template);
+      // textタグを取得（ここに文字列が入る）
+      var textTag = toastXml.GetElementsByTagName("text").First();
+      // 子要素に文字列を追加
+      textTag.AppendChild(toastXml.CreateTextNode(text1));
+
+      // Notifierを作成してShowメソッドで通知
+      var notifier = ToastNotificationManager.CreateToastNotifier();
+      notifier.Show(new ToastNotification(toastXml));
+    }
+
+    //Like関連
+    private async void favasync(long itemid)
+    {
+      try
+      {
+        await tokens.Favorites.CreateAsync(id => itemid);
+      }
+      catch
+      {
+      }
+    }
+
+    public void like(long id)
+    {
+      favasync(id);
+      var tes = "'いいね'しました";
+      toast(tes);
+    }
+
+    //リツイート
+    private async void retweetasync(long itemid)
+    {
+      try
+      {
+        await tokens.Statuses.RetweetAsync(id => itemid);
+      }
+      catch (Exception ex)
+      {
       }
 
-
     }
+
+    public void retweet(long id)
+    {
+      retweetasync(id);
+      var tes = "リツイートしました";
+      toast(tes);
+    }
+
 
     public void AddInfo(List<TweetClass.UserInfo> userPro, CoreTweet.User user/*=null, CoreTweet.*/)
     {

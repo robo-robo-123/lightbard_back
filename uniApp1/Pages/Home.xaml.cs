@@ -19,6 +19,7 @@ using Windows.UI.Popups;
 using Windows.Storage.Pickers;
 using Windows.UI.Notifications;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=234238 を参照してください
 
@@ -33,10 +34,6 @@ namespace uniApp1.Pages
     internal Tokens tokens;
     Tweets data = new Tweets();
     ObservableCollection<TweetClass.TweetInfo> tweet;
-
-    List<TweetClass.TweetInfo> userTweet;
-    List<TweetClass.UserInfo> user;
-    List<TweetClass.UserInfo> userPro;
 
     public long? UserId { get; set; }
     TweetClass.TweetInfo item;
@@ -54,110 +51,28 @@ namespace uniApp1.Pages
       this.InitializeComponent();
 
       tokens = data.getToken();
-      if (item == null)
-      {
         tweetLoad();
-      }
 
-
-      //tweetLoad();
       var settings = ApplicationData.Current.RoamingSettings;
     }
 
-
+    //page読み込み時
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
       item = (TweetClass.TweetInfo)e.Parameter;
-      
-      if(item != null /*&& e.SourcePageType.Name == */)
-      {
-        UserId = item.UserId;
-        userTweetLoad();
-      }
-
-
-
     }
 
     //tweetをロードするのに使います
     private async void tweetLoad()
     {
-      if (tokens != null)
-      {
-        tweet = new ObservableCollection<TweetClass.TweetInfo>();
-        try
-        {
-          //tweet = new List<TweetClass.TweetInfo>();
-
-
-          foreach (var status in await tokens.Statuses.HomeTimelineAsync(count => 800))
-          {
-            data.Addtweet(tweet, status);
-          }
-          this.listView.ItemsSource = tweet;
-        }
-        catch (Exception ex)
-        {
-        }
-      }
-    }
-
-    private async void userTweetLoad()
-    {
-      if (tokens != null)
-      {
-        tweet = new ObservableCollection<TweetClass.TweetInfo>();
-        try
-        {
-         // tweet = new List<TweetClass.TweetInfo>();
-
-
-          foreach (var status in await tokens.Statuses.UserTimelineAsync(user_id => UserId, count => 800))
-          {
-            data.Addtweet(tweet, status);
-          }
-          this.listView.ItemsSource = tweet;
-        }
-        catch (Exception ex)
-        {
-        }
-      }
-    }
-
-    private async void mentionLoad()
-    {
-      if (tokens != null)
-      {
-        tweet = new ObservableCollection<TweetClass.TweetInfo>();
-        try
-        {
-         // tweet = new List<TweetClass.TweetInfo>();
-
-
-          foreach (var status in await tokens.Statuses.MentionsTimelineAsync(count => 800))
-          {
-            data.Addtweet(tweet, status);
-          }
-          this.listView.ItemsSource = tweet;
-          
-        }
-        catch (Exception ex)
-        {
-        }
-      }
+      Task<ObservableCollection<TweetClass.TweetInfo>> tweetload = data.tweetload();
+      this.listView.ItemsSource = await tweetload;
     }
 
     //ロードボタンです．
     private void reloadButton_Click(object sender, RoutedEventArgs e)
     {
-      if (item == null)
-      {
         tweetLoad();
-      }
-      else
-      {
-        userTweetLoad();
-      }
     }
 
     //リプライページに飛びます．※ツイートに関しては，下のツイートと共通化させたい．
@@ -172,25 +87,12 @@ namespace uniApp1.Pages
       {
         var item_send = this.listView.SelectedItem as TweetClass.TweetInfo;
         this.Frame.Navigate(typeof(ReplayPage), item_send);
-        //rootFrame.Navigate(typeof(ReplayPage), item_send);
       }
-
     }
 
-    private void toast(string text1)
+    private void tweetButton_Click(object sender, RoutedEventArgs e)
     {
-      // テンプレートのタイプを取得
-      var template = ToastTemplateType.ToastText01;
-      // テンプレートを取得（XMLDocument"
-      var toastXml = ToastNotificationManager.GetTemplateContent(template);
-      // textタグを取得（ここに文字列が入る）
-      var textTag = toastXml.GetElementsByTagName("text").First();
-      // 子要素に文字列を追加
-      textTag.AppendChild(toastXml.CreateTextNode(text1));
-
-      // Notifierを作成してShowメソッドで通知
-      var notifier = ToastNotificationManager.CreateToastNotifier();
-      notifier.Show(new ToastNotification(toastXml));
+      this.Frame.Navigate(typeof(TweetPage));
     }
 
     /// <summary>
@@ -198,68 +100,32 @@ namespace uniApp1.Pages
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    
-    //お気に入り．
-    private async void favasync(long itemid)
-    {
-      try { 
-     await tokens.Favorites.CreateAsync(id => itemid);
-      //  favoriteBlock.Text = "'いいね'しました";
-        
-      }
-      catch
-      {
-       // favoriteBlock.Text = "既に'いいね'しています";
-      }
-    }
 
+    //お気に入り．
     private void favoriteButton_Click(object sender, RoutedEventArgs e)
     {
       var item = this.listView.SelectedItem as TweetClass.TweetInfo;
       if (item == null)
       {
-      //  favoriteBlock.Text = "未選択です";
         return;
       }
       else
       {
-          favasync(item.Id);
-        var tes = "'いいね'しました";
-        toast(tes);
+        data.like(item.Id);
       }
     }
 
     //リツイート
-    private async void retweetasync(long itemid)
-    {
-      try
-      {
-        await tokens.Statuses.RetweetAsync(id => itemid);
-        //retweetBlock.Text = "リツイートしました";
-       // var dlg = new MessageDialog("test", "リツイートしました");
-       // await dlg.ShowAsync();
-      }
-      catch (Exception ex)
-      {
-        //retweetBlock.Text = "既にリツイートしています";
-      }
-
-    }
-
     private void retweetButton_Click(object sender, RoutedEventArgs e)
     {
       var item = this.listView.SelectedItem as TweetClass.TweetInfo;
       if (item == null)
       {
-       // retweetBlock.Text = "未選択です";
         return;
       }
       else
       {
-        retweetasync(item.Id);
-        var tes = "リツイートしました";
-        toast(tes);
-
+        data.retweet(item.Id);
       }
     }
     
@@ -296,16 +162,6 @@ namespace uniApp1.Pages
       }
   }
 
-  private void listView_RightTapped(object sender, RightTappedRoutedEventArgs e)
-    {
-      FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
-
-    }
-
-    private void MenuFlyoutItem_Tapped(object sender, TappedRoutedEventArgs e)
-    {
-
-    }
 
     private void userInfoItem_Tapped(object sender, TappedRoutedEventArgs e)
     {
@@ -342,10 +198,11 @@ namespace uniApp1.Pages
       }
     }
 
-    private void tweetButton_Click(object sender, RoutedEventArgs e)
+    private void TweetsList_RightTapped(object sender, RightTappedRoutedEventArgs e)
     {
-      this.Frame.Navigate(typeof(TweetPage));
+      FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
     }
+
   }
 
 }
