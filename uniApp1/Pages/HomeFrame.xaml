@@ -10,22 +10,23 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*"/>
-      <ColumnDefinition Width="*"/>
+      <ColumnDefinition x:Name="grid" Width="0"/>
     </Grid.ColumnDefinitions>
       
       <Frame x:Name="frame1" />
-      <Frame x:Name="frame2" Grid.Column="1" />
+    <Frame x:Name="frame2" Grid.Column="1" />
   </Grid>
 
   <VisualStateManager.VisualStateGroups>
     <VisualStateGroup x:Name="WindowStates">
       <VisualState x:Name="WideState">
         <VisualState.StateTriggers>
-          <AdaptiveTrigger MinWindowWidth="400" />
+          <AdaptiveTrigger MinWindowWidth="200" />
         </VisualState.StateTriggers>
         <VisualState.Setters>
           <Setter Target="frame2.Visibility" Value="Visible"/>
-          <!--Target="SplitView.DisplayMode" Value="CompactInline"-->
+          <!--<Setter Target="grid.Width" Value="0"/>
+          Target="SplitView.DisplayMode" Value="CompactInline"-->
         </VisualState.Setters>
       </VisualState>
       <VisualState x:Name="NarrowState">
@@ -34,6 +35,7 @@
         </VisualState.StateTriggers>
         <VisualState.Setters>
           <Setter Target="frame2.Visibility" Value="Collapsed"/>
+          <Setter Target="grid.Width" Value="0"/>
         </VisualState.Setters>
       </VisualState>
     </VisualStateGroup>
