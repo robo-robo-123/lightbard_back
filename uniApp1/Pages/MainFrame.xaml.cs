@@ -29,7 +29,8 @@ namespace uniApp1.Pages
       this.timelineFrame.Navigate(typeof(Pages.Home));
       //this.tweetFrame.Navigate(typeof(Pages.TweetPage));
       this.mentionFrame.Navigate(typeof(Pages.MentionPage));
-      
+      this.searchFrame.Navigate(typeof(Pages.SearchPage));
+
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)

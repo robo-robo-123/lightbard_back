@@ -42,10 +42,20 @@
         <PivotItem.Header>
           <Grid>
             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE910;" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,0,0"/>
-            <TextBlock Text="Mention" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="20,0,0,0" Visibility="{Binding PivotToggleSwtich}"/>
+            <TextBlock Text="Mention" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="30,0,0,0" Visibility="{Binding PivotToggleSwtich}"/>
           </Grid>
         </PivotItem.Header>
         <Frame x:Name="mentionFrame" Margin="-12,0" Tapped="mentionFrame_Tapped" />
+      </PivotItem>
+
+      <PivotItem x:Name="searchItem"   Tapped="mentionItem_Tapped">
+        <PivotItem.Header>
+          <Grid>
+            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE11A;" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,0,0"/>
+            
+          </Grid>
+        </PivotItem.Header>
+        <Frame x:Name="searchFrame" Margin="-12,0"  />
       </PivotItem>
 
   </Pivot>
