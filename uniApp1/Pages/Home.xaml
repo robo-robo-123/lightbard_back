@@ -61,7 +61,7 @@
       <TextBlock x:Name="popBlock" />
     </Popup>
 
-    <CommandBar ClosedDisplayMode="Minimal" VerticalAlignment="Bottom">
+    <CommandBar ClosedDisplayMode="Compact" VerticalAlignment="Bottom">
       <CommandBar.SecondaryCommands>
         <!--
         <AppBarButton x:Name="userInfoCommand" Icon="Directions" Label="UserInfo" Click="userInfoCommand_Click" />

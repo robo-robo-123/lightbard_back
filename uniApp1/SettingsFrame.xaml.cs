@@ -16,6 +16,7 @@ using CoreTweet;
 using Windows.Storage;
 using MyToolkit;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=234238 を参照してください
 
@@ -93,6 +94,22 @@ private void BackButton_Click(object sender, RoutedEventArgs e)
     {
       var str = "2015/12/02にVer.2を公開。\n2015/12/05に会話機能を追加";
       releaseBlock.Text = str;
+    }
+
+    private void testButton_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void viewToggle_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+      //testBlock.Text = "changedtest";
+    }
+
+    private async void viewToggle_Toggled(object sender, RoutedEventArgs e)
+    {
+     // var dlg = new MessageDialog("反映するには再起動してください", "完了");
+     // await dlg.ShowAsync();
     }
   }
 }

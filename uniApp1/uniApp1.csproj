@@ -104,12 +104,16 @@
     </Compile>
     <Compile Include="Class\OptionSetting.cs" />
     <Compile Include="Common\BindableBase.cs" />
+    <Compile Include="Common\boolean2visibilityconverter.cs" />
     <Compile Include="Models\CommandModel.cs" />
     <Compile Include="Pages\BlockPage.xaml.cs">
       <DependentUpon>BlockPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ConvePage.xaml.cs">
       <DependentUpon>ConvePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DirectPage.xaml.cs">
+      <DependentUpon>DirectPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\HomeFrame.xaml.cs">
       <DependentUpon>HomeFrame.xaml</DependentUpon>
@@ -196,6 +200,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ConvePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\DirectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

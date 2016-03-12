@@ -6,7 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:Class="using:uniApp1.Class"
     x:Class="uniApp1.Pages.MainFrame"
-  NavigationCacheMode="Enabled" 
+  xmlns:set="using:uniApp1.Common"
+  NavigationCacheMode="Required" 
     mc:Ignorable="d" MinWidth="360" >
 
   <Pivot x:Name="rootPivot" >
@@ -24,7 +25,7 @@
       <PivotItem.Header>
         <Grid>
           <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE80F;" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,0,0"/>
-          <!--<TextBlock x:Uid="Timeline" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="48,0,0,0"/>-->
+          <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="48,0,0,0" Visibility="{Binding PivotToggleSwtich, Converter={StaticResource True2Visibility}, Mode=OneWay}"/>
         </Grid>
       </PivotItem.Header>
 
@@ -42,7 +43,7 @@
         <PivotItem.Header>
           <Grid>
             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE910;" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,0,0"/>
-            <TextBlock Text="Mention" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="30,0,0,0" Visibility="{Binding PivotToggleSwtich}"/>
+            <TextBlock Text="Mention" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="30,0,0,0" Visibility="{Binding PivotToggleSwtich, Converter={StaticResource True2Visibility}, Mode=OneWay}"/>
           </Grid>
         </PivotItem.Header>
         <Frame x:Name="mentionFrame" Margin="-12,0" Tapped="mentionFrame_Tapped" />
@@ -52,7 +53,7 @@
         <PivotItem.Header>
           <Grid>
             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE11A;" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,0,0"/>
-            
+            <TextBlock Text="Search" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="30,0,0,0" Visibility="{Binding PivotToggleSwtich, Converter={StaticResource True2Visibility}, Mode=OneWay}"/>
           </Grid>
         </PivotItem.Header>
         <Frame x:Name="searchFrame" Margin="-12,0"  />

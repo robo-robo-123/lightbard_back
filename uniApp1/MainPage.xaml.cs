@@ -36,8 +36,9 @@ namespace uniApp1
       tokens = data.getToken();
       nameChange();
       this.testFrame.Navigate(typeof(Pages.HomeFrame));
+      //this.testFrame.Navigate(typeof(Pages.MainFrame));
 
-      
+
       SystemNavigationManager.GetForCurrentView().BackRequested += (_, args) =>
       {
         if (testFrame.CanGoBack)
@@ -66,14 +67,16 @@ namespace uniApp1
 
     private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
     {
-  // 適切な移動先のページに移動し、新しいページを構成します。
-  // このとき、必要な情報をナビゲーション・パラメータとして渡します
-  this.testFrame.Navigate(typeof(Pages.HomeFrame));
+      // 適切な移動先のページに移動し、新しいページを構成します。
+      // このとき、必要な情報をナビゲーション・パラメータとして渡します
+      this.testFrame.Navigate(typeof(Pages.HomeFrame));
+      //this.testFrame.Navigate(typeof(Pages.MainFrame));
     }
 
     private void Grid_Tapped_1(object sender, TappedRoutedEventArgs e)
     {
       this.testFrame.Navigate(typeof(Pages.HomeFrame));
+      //this.testFrame.Navigate(typeof(Pages.MainFrame));
 
     }
 

@@ -21,8 +21,8 @@
         <TextBlock Text="{Binding Date}"  MaxWidth="280" TextWrapping="Wrap" HorizontalAlignment="Left"/>
         
         <StackPanel Orientation="Horizontal">
-          <TextBlock Text="{Binding RetweetUser}"  MaxWidth="280" TextWrapping="Wrap"/>
-          <Image Source="{Binding RetweetUserProfileImageUrl}" Width="30" Height="30" Stretch="Uniform" Margin="10,0,0,0"></Image>
+          <TextBlock Text="{Binding RetweetUser}"  MaxWidth="280" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+          <Image Source="{Binding RetweetUserProfileImageUrl}" Stretch="Uniform" Margin="10,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxWidth="30" MaxHeight="34"/>
         </StackPanel>
       </StackPanel>
     </StackPanel>

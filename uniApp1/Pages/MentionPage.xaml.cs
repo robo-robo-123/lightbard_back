@@ -62,7 +62,13 @@ namespace uniApp1.Pages
     private async void mentionLoad()
     {
       Task<ObservableCollection<TweetClass.TweetInfo>> mentionload = data.mentionload();
-      this.listView.ItemsSource = await mentionload;
+      try {
+        this.listView.ItemsSource = await mentionload;
+      }
+      catch(Exception ex)
+      {
+        
+      }
     }
 
     //ロードボタンです．

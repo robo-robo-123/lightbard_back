@@ -53,12 +53,31 @@ namespace uniApp1.Class
 
 
     // 単純な値（string）
+    /*
     private const string PivotToggleSwtichDefault = "False";
     public string PivotToggleSwtich
     {
-      get { if (GetValue<string>(PivotToggleSwtichDefault) == "True") { return "Visible"; } else { return "Collapsed"; } }
+      get { if (GetValue<string>(PivotToggleSwtichDefault) == "True") { return "True"; } else { return "False"; } }
       set { SetValue<string>(value); }
     }
+    */
+    
+    private const bool PivotToggleSwtichDefault = false;
+    public bool PivotToggleSwtich
+    {
+      get { if (GetValue<bool>(PivotToggleSwtichDefault) == true) {  return true; } else {  return false; } }
+      set { SetValue<bool>(value); }
+    }
+    
+
+    /*
+    public string ViewSwtich
+    {
+      get { if (GetValue<string>(PivotToggleSwtichDefault) == "True") { return "Visible"; } else { return "Collapsed"; } }
+// set { SetValue<bool>(value); }
+    }
+    */
+
 
     // 単純な値（double）
     private const double FontSizeDefault = 18.0;

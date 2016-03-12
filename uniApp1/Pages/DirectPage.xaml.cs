@@ -12,10 +12,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using uniApp1.Class;
-using CoreTweet;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Core;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=234238 を参照してください
 
@@ -24,31 +20,11 @@ namespace uniApp1.Pages
   /// <summary>
   /// それ自体で使用できる空白ページまたはフレーム内に移動できる空白ページ。
   /// </summary>
-  public sealed partial class ImageView : Page
+  public sealed partial class DirectPage : Page
   {
-    public ImageView()
+    public DirectPage()
     {
       this.InitializeComponent();
-      SystemNavigationManager.GetForCurrentView().BackRequested += (_, args) =>
-      {
-        if (Frame.CanGoBack)
-        {
-          Frame.GoBack();
-          args.Handled = true;
-        }
-      };
-    }
-
-
-    protected override void OnNavigatedTo(NavigationEventArgs e)
-    {
-      var item = (ImageSource)e.Parameter;
-      imageview.Source = item;
-    }
-
-    private void cancelButton_Click(object sender, RoutedEventArgs e)
-    {
-      if (this.Frame != null && this.Frame.CanGoBack) this.Frame.GoBack();
     }
   }
 }

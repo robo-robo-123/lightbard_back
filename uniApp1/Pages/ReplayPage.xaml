@@ -85,7 +85,7 @@
 <TextBlock x:Name="testBlock"  />
 
         
-      
+      <!--Reactive...でできない？-->
       
       <ScrollViewer MaxHeight="250" Background="Transparent" HorizontalScrollBarVisibility="Auto">
           <Grid>

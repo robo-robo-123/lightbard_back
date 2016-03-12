@@ -65,8 +65,13 @@ namespace uniApp1.Pages
     //tweetをロードするのに使います
     private async void tweetLoad()
     {
+
       Task<ObservableCollection<TweetClass.TweetInfo>> tweetload = data.tweetload();
-      this.listView.ItemsSource = await tweetload;
+      try {
+        this.listView.ItemsSource = await tweetload;
+      }
+      catch(Exception ex)
+      { }
     }
 
     //ロードボタンです．

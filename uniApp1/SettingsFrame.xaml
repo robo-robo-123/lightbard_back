@@ -32,18 +32,34 @@
             <TextBlock Text="アカウント登録"/>
             <Button x:Name="registButton" Content="登録" Click="registButton_Click"/>
 
-            <ToggleSwitch IsOn="{Binding PivotToggleSwtich, Mode=TwoWay}"/>
-
-            <ComboBox SelectedValuePath="Content"
-      SelectedValue="{Binding PivotToggleSwtich, Mode=TwoWay}"
-      Background="{Binding SelectedItem.Background, RelativeSource={RelativeSource Mode=Self}}"
-      Foreground="{Binding SelectedItem.Foreground, RelativeSource={RelativeSource Mode=Self}}"
-      >
-              <ComboBoxItem Content="False" Background="DarkRed" Foreground="White" />
-              <ComboBoxItem Content="True" Background="DarkGoldenrod" Foreground="Black" />
-            </ComboBox>
           </StackPanel>
 
+        </Grid>
+      </PivotItem>
+
+      <PivotItem Header="閲覧" Tapped="PivotItem_Tapped">
+        <Grid>
+          <Grid.DataContext>
+            <Class:OptionSettings/>
+          </Grid.DataContext>
+
+          <RelativePanel>
+          <!-- <ToggleButton x:Name="viewToggle" Content="View" IsChecked="{Binding PivotToggleSwtich, Mode=TwoWay}" />
+            <Button x:Name="testButton" Click="testButton_Click" />-->
+
+            <TextBlock x:Name="pivotViewBlock"  Text="HOMEのタブの文字の切り替えを行います"/>
+            <ToggleSwitch x:Name="viewToggle" IsOn="{Binding PivotToggleSwtich, Mode=TwoWay}" IsEnabledChanged="viewToggle_IsEnabledChanged" Toggled="viewToggle_Toggled" RelativePanel.Below="pivotViewBlock"/>
+          <TextBlock x:Name="screenNameViewBlock" Text="名前の表示切り替えを行います(未実装)" RelativePanel.Below="viewToggle"/>
+          <ComboBox x:Name="nameComboBox" SelectedValuePath="Content"
+      SelectedValue="{Binding PivotToggleSwtich, Mode=TwoWay}" RelativePanel.Below="screenNameViewBlock"
+      >
+            <ComboBoxItem Content="username+screenname"  />
+            <ComboBoxItem Content="username"  />
+              <ComboBoxItem Content="screenname"  />
+            </ComboBox>
+            <TextBlock x:Name="photoViewBlock"  Text="HOMEのタブの文字の切り替えを行います" RelativePanel.Below="nameComboBox"/>
+            <ToggleSwitch x:Name="photoviewToggle" IsOn="{Binding PivotToggleSwtich, Mode=TwoWay}" IsEnabledChanged="viewToggle_IsEnabledChanged" Toggled="viewToggle_Toggled" RelativePanel.Below="photoViewBlock"/>
+          </RelativePanel>
         </Grid>
       </PivotItem>
 
