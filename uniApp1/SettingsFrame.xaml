@@ -46,19 +46,16 @@
           <RelativePanel>
           <!-- <ToggleButton x:Name="viewToggle" Content="View" IsChecked="{Binding PivotToggleSwtich, Mode=TwoWay}" />
             <Button x:Name="testButton" Click="testButton_Click" />-->
-
-            <TextBlock x:Name="pivotViewBlock"  Text="HOMEのタブの文字の切り替えを行います"/>
-            <ToggleSwitch x:Name="viewToggle" IsOn="{Binding PivotToggleSwtich, Mode=TwoWay}" IsEnabledChanged="viewToggle_IsEnabledChanged" Toggled="viewToggle_Toggled" RelativePanel.Below="pivotViewBlock"/>
-          <TextBlock x:Name="screenNameViewBlock" Text="名前の表示切り替えを行います(未実装)" RelativePanel.Below="viewToggle"/>
-          <ComboBox x:Name="nameComboBox" SelectedValuePath="Content"
-      SelectedValue="{Binding PivotToggleSwtich, Mode=TwoWay}" RelativePanel.Below="screenNameViewBlock"
+            <TextBlock x:Name="extextBlock" Text="このページの設定は、アプリの再起動後に有効になります。"  />
+            <ToggleSwitch x:Name="viewToggle" Header="HOMEのタブの文字の切り替えを行います" IsOn="{Binding PivotToggleSwtich, Mode=TwoWay}" IsEnabledChanged="viewToggle_IsEnabledChanged" Toggled="viewToggle_Toggled" RelativePanel.Below="extextBlock"/>
+            <ComboBox x:Name="nameComboBox" SelectedValuePath="Content" Header="名前の表示切り替えを行います(未実装)"
+      SelectedValue="{Binding PivotToggleSwtich, Mode=TwoWay}" RelativePanel.Below="viewToggle"
       >
-            <ComboBoxItem Content="username+screenname"  />
-            <ComboBoxItem Content="username"  />
+              <ComboBoxItem Content="username+screenname"  />
+              <ComboBoxItem Content="username"  />
               <ComboBoxItem Content="screenname"  />
             </ComboBox>
-            <TextBlock x:Name="photoViewBlock"  Text="HOMEのタブの文字の切り替えを行います" RelativePanel.Below="nameComboBox"/>
-            <ToggleSwitch x:Name="photoviewToggle" IsOn="{Binding PivotToggleSwtich, Mode=TwoWay}" IsEnabledChanged="viewToggle_IsEnabledChanged" Toggled="viewToggle_Toggled" RelativePanel.Below="photoViewBlock"/>
+            <ToggleSwitch x:Name="photoviewToggle" Header="Timelineの画像の表示を行います（未実装！！！）" IsEnabledChanged="viewToggle_IsEnabledChanged" Toggled="viewToggle_Toggled" RelativePanel.Below="nameComboBox"/>
           </RelativePanel>
         </Grid>
       </PivotItem>

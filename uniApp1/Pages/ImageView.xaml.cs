@@ -50,5 +50,10 @@ namespace uniApp1.Pages
     {
       if (this.Frame != null && this.Frame.CanGoBack) this.Frame.GoBack();
     }
+
+    private void saveButton_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
   }
 }

@@ -25,7 +25,7 @@
       <PivotItem.Header>
         <Grid>
           <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE80F;" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,0,0"/>
-          <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="48,0,0,0" Visibility="{Binding PivotToggleSwtich, Converter={StaticResource True2Visibility}, Mode=OneWay}"/>
+          <TextBlock Text="Home" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="48,0,0,0" Visibility="{Binding PivotToggleSwtich, Converter={StaticResource True2Visibility}, Mode=OneWay}"/>
         </Grid>
       </PivotItem.Header>
 

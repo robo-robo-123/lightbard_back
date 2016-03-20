@@ -5,17 +5,24 @@
     xmlns:local="using:uniApp1.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  NavigationCacheMode="Required"
     mc:Ignorable="d">
 
 
   <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
        <Image x:Name="imageview" Margin="0,50,0,0"/> 
     <CommandBar ClosedDisplayMode="Compact" Grid.Row="1" VerticalAlignment="Top" >
+      <AppBarButton x:Name="saveButton"  Label="Cancel" Click="saveButton_Click" >
+        <AppBarButton.Icon>
+          <FontIcon Glyph="&#xE74E;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+        </AppBarButton.Icon>
+      </AppBarButton>
       <AppBarButton x:Name="cancelButton"  Label="Cancel" Click="cancelButton_Click" >
         <AppBarButton.Icon>
           <FontIcon Glyph="&#xE711;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
         </AppBarButton.Icon>
       </AppBarButton>
+
     </CommandBar>
 
   </Grid>

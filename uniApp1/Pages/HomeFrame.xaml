@@ -8,25 +8,26 @@
   NavigationCacheMode="Required"  
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*"/>
-      <ColumnDefinition x:Name="grid" Width="0"/>
-    </Grid.ColumnDefinitions>
-      
-      <Frame x:Name="frame1" />
-    <Frame x:Name="frame2" Grid.Column="1" />
-  </Grid>
 
+
+
+  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+  <RelativePanel>
+
+    <Frame x:Name="frame1" Width="400" />
+    <Frame x:Name="frame2" RelativePanel.RightOf="frame1"/>
+    <!--Collapsed Visible-->
+  </RelativePanel>
+    
   <VisualStateManager.VisualStateGroups>
     <VisualStateGroup x:Name="WindowStates">
       <VisualState x:Name="WideState">
         <VisualState.StateTriggers>
-          <AdaptiveTrigger MinWindowWidth="200" />
+          <AdaptiveTrigger MinWindowWidth="400" />
         </VisualState.StateTriggers>
         <VisualState.Setters>
-          <Setter Target="frame2.Visibility" Value="Visible"/>
-          <!--<Setter Target="grid.Width" Value="0"/>
+         <!--<Setter Target="frame2.Visibility" Value="Visible"/>
+          <Setter Target="grid.Width" Value="0"/>
           Target="SplitView.DisplayMode" Value="CompactInline"-->
         </VisualState.Setters>
       </VisualState>
@@ -35,10 +36,18 @@
           <AdaptiveTrigger MinWindowWidth="0" />
         </VisualState.StateTriggers>
         <VisualState.Setters>
-          <Setter Target="frame2.Visibility" Value="Collapsed"/>
-          <Setter Target="grid.Width" Value="0"/>
+            <!--<Setter Target="frame2.Visibility" Value="Collapsed"/>
+          <Setter Target="grid.Width" Value="0"/>-->
         </VisualState.Setters>
       </VisualState>
     </VisualStateGroup>
   </VisualStateManager.VisualStateGroups>
+  </Grid>
+
+  
+  
+
+  
+  
+  
 </Page>

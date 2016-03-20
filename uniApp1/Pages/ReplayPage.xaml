@@ -5,40 +5,15 @@
     xmlns:local="using:uniApp1"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  NavigationCacheMode="Required"
     mc:Ignorable="d">
 
-  <Page.BottomAppBar>
-    <CommandBar ClosedDisplayMode="Compact" Grid.Row="1" VerticalAlignment="Bottom" >
-      <CommandBar.SecondaryCommands>
-        <!--
-        <AppBarButton x:Name="userInfoCommand" Icon="Directions" Label="UserInfo" Click="userInfoCommand_Click" />-->
-      </CommandBar.SecondaryCommands>
 
-      <AppBarButton x:Name="replyButton" Label="Reply" Click="replyTweetButtom_Click" ToolTipService.ToolTip="リプライを送ります"   >
-        <AppBarButton.Icon>
-          <FontIcon Glyph="&#xE248;" FontSize="20" />
-        </AppBarButton.Icon>
-      </AppBarButton>
 
-      <AppBarButton x:Name="cancelButton"  Label="Reload" Click="cancelButton_Click" >
-        <AppBarButton.Icon>
-          <FontIcon Glyph="&#xE711;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
-        </AppBarButton.Icon>
-      </AppBarButton>
 
-      <AppBarButton x:Name="conveButton"  Label="comment" Click="conveButton_Click"  >
-        <AppBarButton.Icon>
-          <FontIcon Glyph="&#xE89B;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
-        </AppBarButton.Icon>
-      </AppBarButton>
-
-    </CommandBar>
-
-  </Page.BottomAppBar>
-
-  <ScrollViewer>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-   <!--    
+    <ScrollViewer>
+      <!--    
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*"/>
       <ColumnDefinition x:Name="replyColum" Width="*"/>
@@ -86,8 +61,21 @@
 
         
       <!--Reactive...でできない？-->
-      
+        
       <ScrollViewer MaxHeight="250" Background="Transparent" HorizontalScrollBarVisibility="Auto">
+        
+        
+              <RelativePanel>
+                <Image x:Name="tweetImage1" Width="200" Tapped="tweetImage1_Tapped"  Margin="5,5,5,10"/>
+
+                <Image x:Name="tweetImage2" Width="200" Grid.Column="1" Tapped="tweetImage2_Tapped" Margin="5,5,5,10" RelativePanel.RightOf="tweetImage1"/>
+                <Image x:Name="tweetImage3" Width="200" Grid.Column="2" Tapped="tweetImage3_Tapped" Margin="5,5,5,10" RelativePanel.RightOf="tweetImage2"/>
+                <Image x:Name="tweetImage4" Width="200"  Grid.Column="3" Tapped="tweetImage4_Tapped" Margin="5,5,5,10" RelativePanel.RightOf="tweetImage3"/>
+              </RelativePanel>
+
+
+              <!--
+        
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="*"/>
@@ -106,7 +94,7 @@
             <Image x:Name="tweetImage3" Width="200" Grid.Column="2" Tapped="tweetImage3_Tapped" Margin="5,5,5,10"/>
             <Image x:Name="tweetImage4" Width="200"  Grid.Column="3" Tapped="tweetImage4_Tapped" Margin="5,5,5,10"/>
           </Grid>
-        
+    -->
         <!--<ListView >
         
  
@@ -181,7 +169,7 @@
 
         <Frame x:Name="tweetFrane" Grid.Column="1" Visibility="Collapsed"/>
     </StackPanel>
-
+    </ScrollViewer>
     <ContentDialog x:Name="webDlg"
                        Title="Webブラウザで閲覧しますか？"
                        IsPrimaryButtonEnabled="True"
@@ -220,6 +208,38 @@
       </VisualStateGroup>
     </VisualStateManager.VisualStateGroups>
     -->
-  </Grid>
-  </ScrollViewer>
+
+
+
+      <CommandBar ClosedDisplayMode="Compact" VerticalAlignment="Bottom" >
+        <CommandBar.SecondaryCommands>
+          <!--
+        <AppBarButton x:Name="userInfoCommand" Icon="Directions" Label="UserInfo" Click="userInfoCommand_Click" />-->
+        </CommandBar.SecondaryCommands>
+
+        <AppBarButton x:Name="replyButton" Label="Reply" Click="replyTweetButtom_Click" ToolTipService.ToolTip="リプライを送ります"   >
+          <AppBarButton.Icon>
+            <FontIcon Glyph="&#xE248;" FontSize="20" />
+          </AppBarButton.Icon>
+        </AppBarButton>
+
+        <AppBarButton x:Name="cancelButton"  Label="Reload" Click="cancelButton_Click" >
+          <AppBarButton.Icon>
+            <FontIcon Glyph="&#xE711;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+          </AppBarButton.Icon>
+        </AppBarButton>
+
+        <AppBarButton x:Name="conveButton"  Label="comment" Click="conveButton_Click"  >
+          <AppBarButton.Icon>
+            <FontIcon Glyph="&#xE89B;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+          </AppBarButton.Icon>
+        </AppBarButton>
+
+      </CommandBar>
+
+
+    </Grid>
+
+
+
 </Page>
