@@ -1,0 +1,95 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:uniApp1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+
+    xmlns:Class="using:uniApp1.Class"
+    x:Class="uniApp1.SettingsFrame"
+
+    mc:Ignorable="d">
+
+
+
+
+  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Pivot x:Name="rootPivot" >
+      <!--
+      <Pivot.RightHeader>
+        <CommandBar ClosedDisplayMode="Compact">
+          <AppBarButton Icon="Back" Label="Previous" Click="BackButton_Click"/>
+          <AppBarButton Icon="Forward" Label="Next" Click="NextButton_Click"/>
+        </CommandBar>
+      </Pivot.RightHeader>
+      -->
+      <PivotItem Header="アカウント" Tapped="PivotItem_Tapped">
+        <Grid>
+          <Grid.DataContext>
+            <Class:OptionSettings/>
+          </Grid.DataContext>
+          <StackPanel>
+            <TextBlock Text="アカウント登録"/>
+            <Button x:Name="registButton" Content="登録" Click="registButton_Click"/>
+
+          </StackPanel>
+
+        </Grid>
+      </PivotItem>
+
+      <PivotItem Header="閲覧" Tapped="PivotItem_Tapped">
+        <Grid>
+          <Grid.DataContext>
+            <Class:OptionSettings/>
+          </Grid.DataContext>
+
+          <RelativePanel>
+          <!-- <ToggleButton x:Name="viewToggle" Content="View" IsChecked="{Binding PivotToggleSwtich, Mode=TwoWay}" />
+            <Button x:Name="testButton" Click="testButton_Click" />-->
+            <TextBlock x:Name="extextBlock" Text="このページの設定は、アプリの再起動後に有効になります。"  />
+            <ToggleSwitch x:Name="viewToggle" Header="HOMEのタブの文字の切り替えを行います" IsOn="{Binding PivotToggleSwtich, Mode=TwoWay}" IsEnabledChanged="viewToggle_IsEnabledChanged" Toggled="viewToggle_Toggled" RelativePanel.Below="extextBlock"/>
+            <ComboBox x:Name="nameComboBox" SelectedValuePath="Content" Header="名前の表示切り替えを行います(未実装)"
+      SelectedValue="{Binding PivotToggleSwtich, Mode=TwoWay}" RelativePanel.Below="viewToggle"
+      >
+              <ComboBoxItem Content="username+screenname"  />
+              <ComboBoxItem Content="username"  />
+              <ComboBoxItem Content="screenname"  />
+            </ComboBox>
+            <ToggleSwitch x:Name="photoviewToggle" Header="Timelineの画像の表示を行います（未実装！！！）" IsEnabledChanged="viewToggle_IsEnabledChanged" Toggled="viewToggle_Toggled" RelativePanel.Below="nameComboBox"/>
+          </RelativePanel>
+        </Grid>
+      </PivotItem>
+
+      <PivotItem Header="アバウト">
+        <!--Pivot content goes here-->
+        <Grid>
+          <StackPanel>
+            <TextBlock x:Name="versionBlock"/>
+            <TextBlock Text="プライバシーポリシー"/>
+
+          </StackPanel>
+          <!--Added TextBlock control with formatted text.
+          <TextBlock
+       TextWrapping="Wrap"
+       >
+       <Run>This is a simple sample for the pivot control adding text.</Run>
+       <LineBreak/>
+       <LineBreak/>
+       <Run>You can put any content you want here...</Run>
+          </TextBlock>
+          <TextBlock x:Name="test22" Text="このアプリの情報"/>-->
+        </Grid>
+
+      </PivotItem>
+      <PivotItem Header="ミュートとブロック">
+        <!--Pivot content goes here
+        <TextBlock Text="ミュートとブロックの管理を行います"/>-->
+        <Frame x:Name="blockFrame" />
+      </PivotItem>
+      <PivotItem Header="リリースノート">
+        <!--Pivot content goes here-->
+        <TextBlock x:Name="releaseBlock" />
+      </PivotItem>
+    </Pivot>
+  </Grid>
+</Page>

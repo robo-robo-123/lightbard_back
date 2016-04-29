@@ -1,0 +1,59 @@
+﻿<Page
+    x:Class="uniApp1.Pages.TweetPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:uniApp1.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <StackPanel x:Name="tweetStackPanel" >
+
+      <TextBlock x:Name="userBlock" />
+      <TextBox x:Name="tweetInputBox" Height="100" AcceptsReturn="True" TextWrapping="Wrap" MaxLength="139" Margin="10,0,15,0" />
+      <CommandBar HorizontalAlignment="Right" Margin="0,0,15,0">
+        <AppBarButton x:Name="tweetButtom"  Label="Tweet" Click="tweetSendButton_Click" >
+          <AppBarButton.Icon>
+            <FontIcon Glyph="&#xE70F;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+          </AppBarButton.Icon>
+        </AppBarButton>
+        <AppBarButton x:Name="clearButtom"  Label="Clear" Click="clearButtom_Click" >
+          <AppBarButton.Icon>
+            <FontIcon Glyph="&#xE8E6;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+          </AppBarButton.Icon>
+        </AppBarButton>
+        <AppBarButton x:Name="photoButtom"  Label="AddPhote" Click="photoButtom_Click" >
+          <AppBarButton.Icon>
+            <FontIcon Glyph="&#xE722;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+          </AppBarButton.Icon>
+        </AppBarButton>
+        <AppBarButton x:Name="uploadButton"  Label="Upload" Click="uploadButton_Click" >
+          <AppBarButton.Icon>
+            <FontIcon Glyph="&#xE898;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+          </AppBarButton.Icon>
+        </AppBarButton>
+      </CommandBar>
+ <!--     <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
+
+        <Button x:Name="tweetButtom" Content="Tweet"  Foreground="Black" Click="tweetSendButton_Click" />
+        <Button x:Name="clearButtom" Content="Clear"  Foreground="Black" Click="clearButtom_Click"  />        
+           <Button x:Name="photoButtom" Content="Photo"  Foreground="Black" Click="photoButtom_Click"  />     
+
+        <Button x:Name="uploadButton" Content="Upload"  Foreground="Black" Click="uploadButton_Click"   />
+
+
+      </StackPanel>-->
+
+      <ScrollViewer MaxHeight="200" >
+        <ListView >
+          <Image x:Name="sendImage1" Width="200"  />
+          <Image x:Name="sendImage2" Width="200" />
+          <Image x:Name="sendImage3" Width="200" />
+          <Image x:Name="sendImage4" Width="200" />
+        </ListView>
+      </ScrollViewer>
+      <TextBlock x:Name="tweetState" />
+    </StackPanel>
+  </Grid>
+</Page>

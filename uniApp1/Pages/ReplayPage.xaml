@@ -1,0 +1,245 @@
+﻿<Page
+    x:Class="uniApp1.Pages.ReplayPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:uniApp1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  NavigationCacheMode="Required"
+    mc:Ignorable="d">
+
+
+
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <ScrollViewer>
+      <!--    
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition x:Name="replyColum" Width="*"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+     <RowDefinition x:Name="replyRow" />
+
+    </Grid.RowDefinitions>
+   -->
+
+
+    <StackPanel>
+      <Grid Grid.Row="0" >
+
+
+      
+      <StackPanel x:Name="replyStackPanel" >
+        <ListView x:Name="replyView"  Margin="0,0,0,0" VerticalAlignment="Stretch" ItemsSource="{Binding}" Foreground="White" MaxHeight="200"  SelectionMode="Single">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <Image Source="{Binding ProfileImageUrl}" Width="50" Height="50" Stretch="Uniform"></Image>
+              <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="{Binding UserName}" TextWrapping="Wrap" />
+                  <TextBlock Text="{Binding ScreenName}" TextWrapping="Wrap"/>
+                </StackPanel>
+                <TextBlock Text="{Binding Text}"  MaxWidth="300" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding Date}"  MaxWidth="300" TextWrapping="Wrap"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Retweet:"  TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding RetweetCount}" MaxWidth="300" TextWrapping="Wrap"/>
+                    <TextBlock Text=" Like:"  TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding FavoriteCount}"  MaxWidth="300" TextWrapping="Wrap"/>
+                </StackPanel>
+              </StackPanel>
+            </StackPanel>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+        
+<TextBlock x:Name="testBlock"  />
+
+        
+      <!--Reactive...でできない？-->
+        
+      <ScrollViewer MaxHeight="250" Background="Transparent" HorizontalScrollBarVisibility="Auto">
+        
+        
+              <RelativePanel>
+                <Image x:Name="tweetImage1" Width="200" Tapped="tweetImage1_Tapped"  Margin="5,5,5,10"/>
+
+                <Image x:Name="tweetImage2" Width="200" Grid.Column="1" Tapped="tweetImage2_Tapped" Margin="5,5,5,10" RelativePanel.RightOf="tweetImage1"/>
+                <Image x:Name="tweetImage3" Width="200" Grid.Column="2" Tapped="tweetImage3_Tapped" Margin="5,5,5,10" RelativePanel.RightOf="tweetImage2"/>
+                <Image x:Name="tweetImage4" Width="200"  Grid.Column="3" Tapped="tweetImage4_Tapped" Margin="5,5,5,10" RelativePanel.RightOf="tweetImage3"/>
+              </RelativePanel>
+
+
+              <!--
+        
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="*"/>
+              <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Image x:Name="tweetImage1" Width="200" Tapped="tweetImage1_Tapped"  Margin="5,5,5,10"/>
+
+            <Image x:Name="tweetImage2" Width="200" Grid.Column="1" Tapped="tweetImage2_Tapped" Margin="5,5,5,10"/>
+            <Image x:Name="tweetImage3" Width="200" Grid.Column="2" Tapped="tweetImage3_Tapped" Margin="5,5,5,10"/>
+            <Image x:Name="tweetImage4" Width="200"  Grid.Column="3" Tapped="tweetImage4_Tapped" Margin="5,5,5,10"/>
+          </Grid>
+    -->
+        <!--<ListView >
+        
+ 
+            <ListBox>
+              <ScrollViewer MaxHeight="200" Background="Transparent" HorizontalScrollBarVisibility="Auto">
+                <Image x:Name="tweetImage1" Width="200" Tapped="tweetImage1_Tapped"  />
+              </ScrollViewer>
+            </ListBox>
+
+            <ListBox Grid.Column="1" Tapped="ListBox_Tapped">
+              <ScrollViewer MaxHeight="200" Background="Transparent" HorizontalScrollBarVisibility="Auto">
+                <Image x:Name="tweetImage2" Width="200" />
+              </ScrollViewer>
+            </ListBox>       
+        
+        
+            <StackPanel Orientation="Horizontal">
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+
+            </StackPanel>
+          </ListView>-->
+      </ScrollViewer>
+
+      <ScrollViewer MaxHeight="200" >
+        <ListBox x:Name="urlView" ItemsSource="{Binding}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              
+                <HyperlinkButton Content="{Binding Url}" NavigateUri="{Binding Url}">
+                  <HyperlinkButton.Template>
+                    <ControlTemplate>
+                      <TextBlock Margin="5,0,5,0"  
+                                    Text="{Binding Content, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                    </ControlTemplate>
+                  </HyperlinkButton.Template>
+
+                </HyperlinkButton>
+
+                <!--FontSize="20" FontFamily="Segoe UI Light"
+              <TextBlock  x:Name="urlToContent" MinWidth="100" Width="Auto" Text="Url">
+                <Hyperlink NavigateUri="{Binding Url}" x:Name="hlkURL" >
+                  
+                </Hyperlink>
+             </TextBlock>--> 
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </ScrollViewer>
+
+      <TextBlock x:Name="translateBox" TextWrapping="Wrap"/>
+
+      <!--<TextBlock x:Name="replyBlock" />-->
+      <StackPanel Orientation="Horizontal">
+        <!--<TextBox x:Name="replyBox" Width="230" TextWrapping="Wrap" AcceptsReturn="True" MaxLength="140" />
+        <Button x:Name="replyTweetButtom" Click="replyTweetButtom_Click" Content="Reply"/>
+        <Button x:Name="cancelButton" Content="cancel" Click="cancelButton_Click"/>-->
+      </StackPanel>
+      <TextBlock x:Name="reptweetState" />
+    </StackPanel>
+    </Grid>
+
+        <ListView x:Name="conveView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" >
+          <ListView.ItemTemplate >
+            <DataTemplate >
+              <local:TweetsList  />
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+
+
+        <Frame x:Name="tweetFrane" Grid.Column="1" Visibility="Collapsed"/>
+    </StackPanel>
+    </ScrollViewer>
+    <ContentDialog x:Name="webDlg"
+                       Title="Webブラウザで閲覧しますか？"
+                       IsPrimaryButtonEnabled="True"
+                       IsSecondaryButtonEnabled="True"
+                       PrimaryButtonText="OK"
+                       SecondaryButtonText="Cancel">
+      <Grid HorizontalAlignment="Stretch" Width="Auto">
+        <TextBlock Text="Webブラウザを起動し、Tweetページへと遷移します。" />
+      </Grid>
+    </ContentDialog>
+    <!--
+    <VisualStateManager.VisualStateGroups>
+      <VisualStateGroup x:Name="WindowStates2">
+        <VisualState x:Name="WideState2">
+          <VisualState.StateTriggers>
+            <AdaptiveTrigger MinWindowWidth="720" />
+          </VisualState.StateTriggers>
+          <VisualState.Setters>
+            <Setter Target="replyColum.Width" Value="*" />
+            <Setter Target="replyRow.Height" Value="0" />
+            <Setter Target="tweetFrane.Grid.Column" Value="1" />
+            <Setter Target="tweetFrane.Grid.Row" Value="0" />
+          </VisualState.Setters>
+        </VisualState>
+        <VisualState x:Name="NarrowState2">
+          <VisualState.StateTriggers>
+            <AdaptiveTrigger MinWindowWidth="0" />
+          </VisualState.StateTriggers>
+          <VisualState.Setters>
+            <Setter Target="replyColum.Width" Value="0" />
+            <Setter Target="replyRow.Height" Value="*" />
+            <Setter Target="tweetFrane.Grid.Column" Value="0" />
+            <Setter Target="tweetFrane.Grid.Row" Value="1" />
+          </VisualState.Setters>
+        </VisualState>
+      </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+    -->
+
+
+
+      <CommandBar ClosedDisplayMode="Compact" VerticalAlignment="Bottom" >
+        <CommandBar.SecondaryCommands>
+          <!--
+        <AppBarButton x:Name="userInfoCommand" Icon="Directions" Label="UserInfo" Click="userInfoCommand_Click" />-->
+        </CommandBar.SecondaryCommands>
+
+        <AppBarButton x:Name="replyButton" Label="Reply" Click="replyTweetButtom_Click" ToolTipService.ToolTip="リプライを送ります"   >
+          <AppBarButton.Icon>
+            <FontIcon Glyph="&#xE248;" FontSize="20" />
+          </AppBarButton.Icon>
+        </AppBarButton>
+
+        <AppBarButton x:Name="cancelButton"  Label="Reload" Click="cancelButton_Click" >
+          <AppBarButton.Icon>
+            <FontIcon Glyph="&#xE711;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+          </AppBarButton.Icon>
+        </AppBarButton>
+
+        <AppBarButton x:Name="conveButton"  Label="comment" Click="conveButton_Click"  >
+          <AppBarButton.Icon>
+            <FontIcon Glyph="&#xE89B;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+          </AppBarButton.Icon>
+        </AppBarButton>
+
+      </CommandBar>
+
+
+    </Grid>
+
+
+
+</Page>

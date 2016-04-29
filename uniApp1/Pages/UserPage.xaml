@@ -1,0 +1,173 @@
+﻿<Page
+    x:Class="uniApp1.Pages.UserPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:uniApp1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+  <Page.BottomAppBar>
+
+    <CommandBar ClosedDisplayMode="Compact"  VerticalAlignment="Bottom" >
+
+      <CommandBar.SecondaryCommands>
+        <AppBarButton x:Name="userInfoCommand" Icon="Directions" Label="UserInfo" Click="userInfoCommand_Click" />
+      </CommandBar.SecondaryCommands>
+
+      <AppBarButton x:Name="retweetButton"  Label="Retweet" Click="retweetButton_Click" >
+        <AppBarButton.Icon>
+          <FontIcon Glyph="&#xE8EB;" FontSize="20" />
+        </AppBarButton.Icon>
+        <AppBarButton.Flyout>
+          <Flyout x:Name="retweetFlyout" Placement="Top" >
+            <TextBlock x:Name="retweetBlock" />
+          </Flyout>
+        </AppBarButton.Flyout>
+      </AppBarButton>
+
+      <AppBarButton x:Name="likeButton"  Label="Like" Click="favoriteButton_Click" >
+        <AppBarButton.Icon>
+          <FontIcon Glyph="&#xE006;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+        </AppBarButton.Icon>
+        <AppBarButton.Flyout>
+          <Flyout x:Name="favoriteFlyout" Placement="Top" >
+            <TextBlock x:Name="favoriteBlock" />
+          </Flyout>
+        </AppBarButton.Flyout>
+      </AppBarButton>
+
+      <AppBarButton x:Name="replyButton" Label="Detail" Click="replyButton_Click" ToolTipService.ToolTip="Tweetの詳細を確認します"   >
+        <AppBarButton.Icon>
+          <FontIcon Glyph="&#xE8A1;" FontSize="20" />
+        </AppBarButton.Icon>
+      </AppBarButton>
+
+    </CommandBar>
+
+  </Page.BottomAppBar>
+  
+  
+  
+  <!--Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"-->
+    <Grid >
+         
+    <Grid.RowDefinitions>
+      <RowDefinition Height="5*" />
+      <RowDefinition Height="30" />
+      <RowDefinition Height="10*" />
+
+    </Grid.RowDefinitions>
+
+    <!--<StackPanel>-->
+    <ListView x:Name="userInfoView" VerticalAlignment="Stretch" ItemsSource="{Binding}" Foreground="White">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal">
+            <Image Source="{Binding ProfileImageUrl}" Width="50" Height="50" Stretch="Uniform"></Image>
+            <StackPanel Orientation="Vertical">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding UserName}" TextWrapping="Wrap" />
+                <TextBlock Text="{Binding ScreenName}" TextWrapping="Wrap"/>
+              </StackPanel>
+              <TextBlock Text="{Binding Prof}" TextWrapping="Wrap" MaxWidth="300"/>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Follow:" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding FollowCount}" TextWrapping="Wrap"/>
+                <TextBlock Text=" Follower:" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding FollowerCount}" TextWrapping="Wrap"/>
+              </StackPanel>
+            </StackPanel>
+          </StackPanel>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+
+    </ListView>
+
+    <StackPanel Orientation="Horizontal" Grid.Row="1">
+      <Button x:Name="InfoButton" Content="Info" Click="InfoButton_Click"/>
+      <Button x:Name="timeLineButton" Content="Tweet" Width="75" Foreground="Black" Click="timeLineButton_Click"/>
+      <Button x:Name="followerButton" Content="Follower" Width="75" Click="followerButton_Click" Foreground="Black"/>
+      <Button x:Name="fllowButton" Content="Follow" Width="75" Foreground="Black" Click="fllowButton_Click"/>
+      <Button x:Name="favButton" Content="Like" Width="75" Foreground="Black" Click="favButton_Click"/>
+    </StackPanel>
+
+
+    <ListView x:Name="userTLView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" Grid.Row="2">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <local:UserLists />
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+
+
+
+    <ListView x:Name="listView2" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" Grid.Row="2">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <local:TweetsList />
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+
+    <Frame x:Name="tweetFrame" Grid.Row="2" />
+
+
+
+
+  </Grid>
+</Page>
+
+
+
+
+<!--    <ListView x:Name="userTLView" VerticalAlignment="Stretch" ItemsSource="{Binding}" Foreground="White" SelectionMode="Single" Grid.Row="2">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <local:UserLists />
+         
+          <StackPanel Orientation="Horizontal">
+            <Image Source="{Binding ProfileImageUrl}" Width="50" Height="50" Stretch="Uniform"></Image>
+            <StackPanel Orientation="Vertical">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding UserName}" TextWrapping="Wrap" />
+                <TextBlock Text="{Binding ScreenName}" TextWrapping="Wrap"/>
+              </StackPanel>
+              <TextBlock Text="{Binding FollowCount}" />
+              <TextBlock Text="{Binding FavCount}" />
+
+              <TextBlock Text="{Binding Prof}" TextWrapping="Wrap" MaxWidth="300"/>
+              <TextBlock Text="{Binding FollowerCount}" />
+            </StackPanel>
+          </StackPanel>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+
+    </ListView>
+
+    <ListView x:Name="listView" VerticalAlignment="Stretch" ItemsSource="{Binding}"  SelectionMode="Single" Grid.Row="2">
+      <ListView.ItemTemplate>
+
+        <DataTemplate>
+
+          <StackPanel Orientation="Horizontal">
+            <Image Source="{Binding ProfileImageUrl}" Width="50" Height="50" Stretch="Uniform"></Image>
+            <StackPanel Orientation="Vertical">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding UserName}" TextWrapping="Wrap" />
+                <TextBlock Text="{Binding ScreenName}" TextWrapping="Wrap"/>
+              </StackPanel>
+              <TextBlock Text="{Binding Text}" MaxWidth="280" TextWrapping="Wrap"/>
+              <TextBlock Text="{Binding Date}"  MaxWidth="300" TextWrapping="Wrap"/>
+              <TextBlock Text="{Binding UserId}"  MaxWidth="300" TextWrapping="Wrap"/>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding RetweetUser}"  MaxWidth="300" TextWrapping="Wrap"/>
+                <Image Source="{Binding RetweetUserProfileImageUrl}" Width="30" Height="30" Stretch="Uniform" Margin="10,0,0,0"></Image>
+              </StackPanel>
+            </StackPanel>
+          </StackPanel>
+
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>-->

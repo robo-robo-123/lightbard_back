@@ -1,0 +1,2 @@
+MainPackage=C:\Users\Takeshi\Documents\Visual Studio 2015\Projects\uniApp1\uniApp1\bin\ARM\Debug\uniApp1_1.0.6.0_ARM_Debug.appx
+ResourcePack=C:\Users\Takeshi\Documents\Visual Studio 2015\Projects\uniApp1\uniApp1\bin\ARM\Debug\uniApp1_1.0.6.0_language-en.appx

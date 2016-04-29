@@ -1,0 +1,446 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
+using Windows.Storage;
+using uniApp1.Class;
+using CoreTweet;
+using Windows.UI.Popups;
+using Windows.Storage.Pickers;
+using Windows.UI.Xaml.Media.Imaging;
+using System.Threading.Tasks;
+using Windows.Storage.Streams;
+
+// 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=234238 を参照してください
+
+namespace uniApp1.Pages
+{
+  /// <summary>
+  /// それ自体で使用できる空白ページまたはフレーム内に移動できる空白ページ。
+  /// </summary>
+  public sealed partial class TweetPage : Page
+  {
+    internal Tokens tokens;
+
+    List<TweetClass.TweetInfo> tweet;
+    List<TweetClass.TweetInfo> userTweet;
+
+    List<TweetClass.UserInfo> user;
+    List<TweetClass.UserInfo> userPro;
+    public long? ReplyId { get; set; }
+   public byte[] media2 { get; set; } //= null;
+    TweetClass.TweetInfo item;
+
+    public string userId { get; set; }
+    public string ScreenName { get; set; }
+    public string filename { get; set; }
+    public FileInfo fileinfo { get; set; }
+    public MediaUploadResult mid { get; set; }
+    public MediaUploadResult[] mids { get; set; }
+    public Stream stream { get; set; }
+    Tweets data = new Tweets();
+    public byte[] bytes { get; set; }
+    public byte[][] bytesarray { get; set; }
+    public int filenum { get; set; }
+
+    public byte[] bytes1 { get; set; }
+    public byte[] bytes2 { get; set; }
+    public byte[] bytes3 { get; set; }
+    public byte[] bytes4 { get; set; }
+
+    public TweetPage()
+    {
+      this.InitializeComponent();
+      tokens = data.getToken();
+      fileinfo = null;
+    }
+
+    private async void tweetsend(string text)
+    {
+      try
+      {
+          await tokens.Statuses.UpdateAsync(status => text);
+       // await tokens.Statuses.UpdateWithMediaAsync(status => text, media => "C:/Users/Takeshi/Pictures/wu.png");
+        tweetState.Text = "ツイート成功";
+        tweetInputBox.Text = "";
+      }
+      catch
+      {
+        tweetState.Text = "ツイート失敗";
+      }
+    }
+
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+      item = (TweetClass.TweetInfo)e.Parameter;
+      //replyBox.Text = item.ToString();
+      tweetState.Text = e.SourcePageType.Name;
+      if (item != null /*&& e.SourcePageType.*/)
+      {
+        tweetState.Text = e.Content.ToString();
+        userBlock.Text = "Reply to " + item.ScreenName;
+        this.tweetInputBox.Text = item.ScreenName + " ";
+      }
+      else
+      {
+        userBlock.Text = "What's happen?";
+      }
+    }
+
+
+    private void tweetSendButton_Click(object sender, RoutedEventArgs e)
+    {
+//       tweetsend(tweetInputBox.Text);
+      tweetMethod(tweetInputBox.Text, fileinfo);
+    }
+
+    /*
+    public static byte[] ConvertToBytes(this BitmapImage bitmapImage)
+    {
+      using (MemoryStream ms = new MemoryStream())
+      {
+        WriteableBitmap btmMap = new WriteableBitmap
+            (bitmapImage.PixelWidth, bitmapImage.PixelHeight);
+
+        // write an image into the stream
+        
+    //    Extensions.SaveJpeg(btmMap, ms, bitmapImage.PixelWidth, bitmapImage.PixelHeight, 0, 100);
+
+        return ms.ToArray();
+      }
+    }
+    */
+
+    private async void photoButtom_Click(object sender, RoutedEventArgs e)
+    {
+
+      bytes1 = null;
+      bytes2 = null;
+      bytes3 = null;
+      bytes4 = null;
+
+      // ファイルを開くダイアログ
+      // using Windows.Storage.Pickers;
+      FileOpenPicker openPicker = new FileOpenPicker();
+
+
+      // 表示モードはリスト形式
+      //openPicker.ViewMode = PickerViewMode.List;
+
+      // 表示モードはサムネイル形式
+      openPicker.ViewMode = PickerViewMode.Thumbnail;
+
+      // ピクチャーライブラリーが起動時の位置
+      // その他候補はPickerLocationIdを参照
+      // http://msdn.microsoft.com/en-us/library/windows/apps/windows.storage.pickers.pickerlocationid
+      openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+
+      // jpg, jpeg, pngのファイル形式から選択
+      openPicker.FileTypeFilter.Add(".jpg");
+      openPicker.FileTypeFilter.Add(".jpeg");
+      openPicker.FileTypeFilter.Add(".png");
+
+      // ファイルオープンピッカーを起動する
+      IReadOnlyList<StorageFile> files = await openPicker.PickMultipleFilesAsync();
+      /*
+      StorageFile file = await openPicker.PickSingleFileAsync();
+
+      if (file != null)
+      {
+        var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
+        BitmapImage image = new BitmapImage();
+        image.SetSource(stream);
+
+        var reader = new DataReader(stream.GetInputStreamAt(0));
+        bytes = new byte[stream.Size];
+        await reader.LoadAsync((uint)stream.Size);
+        reader.ReadBytes(bytes);
+
+        switch (n)
+        {
+          case 0:
+            sendImage1.Source = image;
+            filename = file.Path;
+            Uri path = new Uri(filename);
+            fileinfo = new FileInfo(filename);
+            break;
+          case 1:
+            sendImage2.Source = image;
+            bytesarray[1] = bytes;
+            break;
+          case 2:
+            sendImage3.Source = image;
+            bytesarray[2] = bytes;
+            break;
+          case 3:
+            sendImage4.Source = image;
+            bytesarray[3] = bytes;
+
+
+            break;
+        }
+
+      }
+      */
+
+
+
+      if (null != files)
+      {
+        int n = 0;
+        foreach (StorageFile file in files)
+        {
+          bytes = null;
+          // FileNameText,FilePathTextはXASMLで定義されたTextBlockコントロール
+          var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
+          BitmapImage image = new BitmapImage();
+          image.SetSource(stream);
+
+          var reader = new DataReader(stream.GetInputStreamAt(0));
+           bytes = new byte[stream.Size];
+          await reader.LoadAsync((uint)stream.Size);
+          reader.ReadBytes(bytes);
+
+          filenum = files.Count;
+          media2 = null;
+          // FileImageはXAMLで定義されたコントロール
+          switch (n)
+          {
+            case 0:
+              sendImage1.Source = image;
+              filename = file.Path;
+              Uri path = new Uri(filename);
+              fileinfo = new FileInfo(filename);
+              bytes1 = bytes;
+              //multitweAsy(bytes);
+              //if (bytes != null)
+              //{ bytesarray[0] = bytes; }
+              break;
+            case 1:
+              sendImage2.Source = image;
+              //if (bytes != null)
+              //{ bytesarray[1] = bytes; }
+              bytes2 = bytes;
+              break;
+            case 2:
+              sendImage3.Source = image;
+              //if (bytes != null)
+              //{ bytesarray[2] = bytes; }
+              bytes3 = bytes;
+              break;
+            case 3:
+              sendImage4.Source = image;
+              //if (bytes != null)
+              //{ bytesarray[3] = bytes; }
+              bytes4 = bytes;
+
+              break;
+          }
+          n++;
+          //tweetInputBox.Text = fileinfo.ToString();
+
+ 
+
+        //  tweetState.Text = mid.ToString();
+
+        }
+
+        //tweetState.Text = bytesarray[3].ToString();
+
+      }
+      else
+      {
+        tweetState.Text = "なにも洗濯できていません";
+      }
+
+
+    }
+
+
+
+    private void tweetButton_Click(object sender, RoutedEventArgs e)
+    {
+      tweetState.Text = "";
+    }
+
+    private async void multitweAsy(byte[] bytes)
+    {
+      try
+      {
+        mids = await Task.WhenAll(
+          /*
+    tokens.Media.UploadAsync(media => bytes),
+    tokens.Media.UploadAsync(media => bytes),
+    tokens.Media.UploadAsync(media => bytes),*/
+    tokens.Media.UploadAsync(media => bytes)
+);
+        tweetState.Text = "upload success!!";
+      }
+      catch (Exception ex)
+      {
+        tweetState.Text = ex.Message;
+      }
+    }
+
+
+    private async void tweAsy(byte[] bytes)
+    {/*
+      Image img = Image.FromFile(@"H:\tmp1\010.jpg");
+
+      // Stream作成
+      System.IO.MemoryStream ms = new System.IO.MemoryStream(1024 * 1024);
+
+      // Streamに画像データ読み込み
+      img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+*/
+      try
+      {
+        MediaUploadResult mid = await tokens.Media.UploadAsync(media => bytes);
+        tweetState.Text = "upload success!!";
+      }
+      catch(Exception ex)
+      {
+        tweetState.Text = ex.Message;
+      }
+    }
+
+    
+    public async void tweetMethod(string text, FileInfo filename = null/*, long? replyid = 0*/)
+    {
+      // getToken();
+      try
+      {
+        if (mids == null)
+        {
+          var x = await tokens.Statuses.UpdateAsync(status => text);
+          tweetState.Text = "ツイート成功";
+          tweetInputBox.Text = "";
+          //   dialog.ShowDialog();
+        }
+        else
+        {
+          //tweAsy();
+          //var x = await tokens.Statuses.UpdateWithMediaAsync(status => text, media => new FileInfo(@"C:/Users/Takeshi/OneDrive/20150121130540.jpg"));
+          /*
+          MediaUploadResult[] result = await Task.WhenAll(
+    tokens.Media.UploadAsync(media => new FileInfo(@"C:\Users\Takeshi\Videos\Captures\Minecraft_ Windows 10 Edition Beta 2015_08_09 14_07_27.png"))
+);
+          Status s = await tokens.Statuses.UpdateAsync(
+    status => "Async World!",
+    media_ids => result.Select(y => y.MediaId)
+);*/
+
+          //MediaUploadResult mid = await tokens.Media.UploadAsync(media => new FileInfo(@"C:\Users\Takeshi\Videos\Captures\Minecraft_ Windows 10 Edition Beta 2015_08_09 14_07_27.png"));
+          //tweetState.Text = "mid OK";
+
+          Status s = await tokens.Statuses.UpdateAsync(
+    status => text,
+    media_ids => mids.Select(x => x.MediaId)
+);
+
+         // var x = await tokens.Statuses.UpdateAsync(status => text, media_ids => mid.MediaId);
+
+          //初期化
+          tweetState.Text = "ツイート成功";
+          tweetInputBox.Text = "";
+          bytes = null;
+          sendImage1.Source = null;
+          mid = null;
+          //, media_ids => mid, media_ids => mid, media_ids => mid
+          //tokens.Media.Upload(media => fileinfo);
+          //  dialog.ShowDialog();
+        }
+      }
+      catch (Exception ex)
+      {
+      //  tweetState.Text = ex.Message;
+       // tweetState.Text = "送信エラー";
+      }
+    }
+
+    private void clearButtom_Click(object sender, RoutedEventArgs e)
+    {
+      tweetState.Text = "";
+      tweetInputBox.Text = "";
+      bytes = null;
+      sendImage1.Source = null;
+      sendImage2.Source = null;
+      sendImage3.Source = null;
+      sendImage4.Source = null;
+      mid = null;
+      mids = null;
+      bytes1 = null;
+      bytes2 = null;
+      bytes3 = null;
+      bytes4 = null;
+
+    }
+
+    private async void uploadButton_Click(object sender, RoutedEventArgs e)
+    {
+
+
+        try
+        {
+        if (bytes1 != null && bytes2 == null && bytes3 == null && bytes4 == null)
+        {
+          mids = await Task.WhenAll(
+            tokens.Media.UploadAsync(media => bytes1)
+            );
+          tweetState.Text = "1";
+        }
+        else if(bytes1 != null && bytes2 != null && bytes3 == null && bytes4 == null)
+        {
+          mids = await Task.WhenAll(
+            tokens.Media.UploadAsync(media => bytes1),
+            tokens.Media.UploadAsync(media => bytes2)
+            );
+          tweetState.Text = "2+upload success!!";
+        } 
+        else if (bytes1 != null && bytes2 != null && bytes3 != null && bytes4 == null)
+        {
+          mids = await Task.WhenAll(
+            tokens.Media.UploadAsync(media => bytes1),
+            tokens.Media.UploadAsync(media => bytes2),
+            tokens.Media.UploadAsync(media => bytes3)
+            );
+          tweetState.Text = "3+upload success!!";
+        }
+        else if (bytes1 != null && bytes2 != null && bytes3 != null && bytes4 != null)
+        {
+          mids = await Task.WhenAll(
+            tokens.Media.UploadAsync(media => bytes1),
+            tokens.Media.UploadAsync(media => bytes2),
+            tokens.Media.UploadAsync(media => bytes3),
+            tokens.Media.UploadAsync(media => bytes4)
+            );
+          tweetState.Text = "4";
+        }
+        else
+        {
+          tweetState.Text = "no image";
+        }
+
+
+      //  tweetState.Text = "upload success!!";
+
+
+      }
+        catch (Exception ex)
+        {
+          tweetState.Text = ex.Message;
+        }
+
+    }
+  }
+}
